@@ -1,48 +1,76 @@
-# Lumina Client
+# Vortex Client
 
-![Lumina Client Logo](./images/lumina.png)  
-[![Download count](https://img.shields.io/github/downloads/TheProjectLumina/LuminaClient/total.svg)](https://github.com/TheProjectLumina/LuminaClient/releases)[![Netlify Status](https://api.netlify.com/api/v1/badges/679c08db-f713-4384-b052-1fd2f90d35f3/deploy-status)](https://app.netlify.com/projects/projectlumina/deploys) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)[![GitHub issues](https://img.shields.io/github/issues/TheProjectLumina/LuminaClient.svg) ](https://github.com/TheProjectLumina/LuminaClient/issues)[![GitHub stars](https://img.shields.io/github/stars/TheProjectLumina/LuminaClient.svg)](https://github.com/TheProjectLumina/LuminaClient/stargazers)[![IntelliJ IDEA](https://img.shields.io/badge/IntelliJIDEA-000000.svg?logo=intellij-idea&logoColor=white)](https://www.jetbrains.com/idea/)[![Firebase](https://img.shields.io/badge/Firebase-039BE5?logo=Firebase&logoColor=white)](https://firebase.google.com/)[![Android](https://img.shields.io/badge/Android-3DDC84?logo=android&logoColor=white)](https://developer.android.com/studio)
+[![Build APK](https://github.com/demoneditz985-ctrl/ShadowClient/actions/workflows/build-apk.yml/badge.svg)](https://github.com/demoneditz985-ctrl/ShadowClient/actions/workflows/build-apk.yml)[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)[![GitHub issues](https://img.shields.io/github/issues/demoneditz985-ctrl/ShadowClient.svg)](https://github.com/demoneditz985-ctrl/ShadowClient/issues)[![Android](https://img.shields.io/badge/Android-3DDC84?logo=android&logoColor=white)](https://developer.android.com/studio)
 
-## Introduction
+## Neon Purple Edition
 
-Lumina Client is a tool built for Minecraft Bedrock Edition players who want to step up their game in competitive PvP. It’s designed to work smoothly across different devices, offering a reliable and user-friendly experience. Our team has worked hard to create a client that supports players on popular servers while keeping performance steady and dependable. Whether you’re a player looking to improve your skills or a developer wanting to dive into our code, Lumina is here to help you succeed.
+This is a fully rebranded build: every trace of the original name has been replaced with
+**Vortex / Vortex Client**, the launcher icon and in-app logo use the new Vortex mark, and
+the complete UI (Material3 theme, splash screen, KitsuGUI, ClickGUI, Wraith client,
+overlays, minimap, notifications and every accent colour) has been repainted in
+**neon purple** — `#B026FF` primary, `#C77DFF` / `#E455FF` accents on a deep `#0A0611` base.
+
+> Vortex Client is a rebranded fork of [Lumina Client](https://github.com/TheProjectLumina/LuminaClient)
+> by Project Lumina (GPL-3.0-or-later). Upstream copyright notices are preserved — see
+> [COPYING.md](./COPYING.md) and [NOTICE](./NOTICE).
+
+### Launch behaviour in this build
+
+The upstream launch gates are removed, so the app simply opens:
+
+* no authentication / ad page is opened when you start the app (the previous
+  browser redirect and the automatic app close are gone),
+* no signature check that terminates the process on a self-built APK,
+* no remote "update" call that closed the app when its host was unreachable,
+* the version check no longer blocks the app when its API is offline,
+* "All files access" is requested only when you press start in the client, not
+  on every launch.
+
+### Get the APK
+
+Builds are produced automatically by GitHub Actions:
+
+1. Open the [**Actions** tab](https://github.com/demoneditz985-ctrl/ShadowClient/actions/workflows/build-apk.yml).
+2. Pick the newest green **Build APK** run.
+3. Download the **vortex-client-apk** artifact (or grab the APK from
+   [**Releases**](https://github.com/demoneditz985-ctrl/ShadowClient/releases)).
 
 ---
 
-## Why Lumina?
+## Introduction
 
-Lumina is all about giving Minecraft players the tools they need to shine in PvP. We’ve focused on making it easy to use, fast, and compatible with a range of platforms. The Project Lumina team is passionate about building a tool that’s both powerful and open for the community to explore and improve. We encourage everyone to use Lumina responsibly, contribute ideas, and join us in making it even better.
+Vortex Client is a tool built for Minecraft Bedrock Edition players who want to step up their game in competitive PvP. It’s designed to work smoothly across different devices, offering a reliable and user-friendly experience. Our team has worked hard to create a client that supports players on popular servers while keeping performance steady and dependable. Whether you’re a player looking to improve your skills or a developer wanting to dive into our code, Vortex is here to help you succeed.
+
+---
+
+## Why Vortex?
+
+Vortex is all about giving Minecraft players the tools they need to shine in PvP. We’ve focused on making it easy to use, fast, and compatible with a range of platforms. The Project Vortex team is passionate about building a tool that’s both powerful and open for the community to explore and improve. We encourage everyone to use Vortex responsibly, contribute ideas, and join us in making it even better.
 
 ---
 
 ## Core Features
 
-Lumina Client offers a set of tools to help you perform better in Minecraft Bedrock Edition PvP. We’ve built it to be fast, reliable, and easy to customize, so you can tweak it to fit your playstyle. The client works well on many servers, with features designed to keep your gameplay smooth and effective. Every part of Lumina has been tested to ensure it runs stably, making it a solid choice for players who want to take their skills to the next level.
+Vortex Client offers a set of tools to help you perform better in Minecraft Bedrock Edition PvP. We’ve built it to be fast, reliable, and easy to customize, so you can tweak it to fit your playstyle. The client works well on many servers, with features designed to keep your gameplay smooth and effective. Every part of Vortex has been tested to ensure it runs stably, making it a solid choice for players who want to take their skills to the next level.
 
 ---
 
-## Community Highlights
+## Community
 
-The Project Lumina community is growing fast, and we love seeing all the energy and support from everyone! Our [Discord server](https://discord.gg/78bqDpAHmK) is full of people chatting, sharing ideas, and just hanging out every day.
-
-Whether you're new or a regular, it's a great place to:
-
-- Meet other Lumina players
-- Share your creations
-- Ask questions and get help
-- Stay up to date with what’s new
-
-Come say hello in the [Discord](https://discord.gg/78bqDpAHmK) — we’d love to have you around!
+Questions, bug reports and feature ideas are welcome on the
+[GitHub Issues page](https://github.com/demoneditz985-ctrl/ShadowClient/issues). The upstream Lumina community
+lives in the [Project Lumina Discord](https://discord.gg/78bqDpAHmK), which is still the
+best place for help with the underlying client features.
 
 ---
 
 ## System Requirements
 
-To run Lumina Client, your device must meet the following specifications:
+To run Vortex Client, your device must meet the following specifications:
 
 - **Android**: Android 9.0 (Pie) or later, supporting both 64-bit and 32-bit architectures.
 - **Minecraft Version**: Minecraft Bedrock Edition 1.21.80 or later is recommended for optimal performance and compatibility.
-- **Non-Android Platforms**: For PC, Mac, or other devices, Lumina operates remotely through an Android device running the client.
+- **Non-Android Platforms**: For PC, Mac, or other devices, Vortex operates remotely through an Android device running the client.
 - **Storage**: At least 200 MB of free storage for the APK and associated data.
 - **Internet**: A stable internet connection is recommended, especially for multiplayer servers.
 
@@ -52,27 +80,27 @@ No additional hardware is required, but enabling developer options on Android ma
 
 ## Installation Instructions
 
-Setting up Lumina Client is quick and straightforward. Follow these steps:
+Setting up Vortex Client is quick and straightforward. Follow these steps:
 
-1. **Download the APK**: Head to our [Releases page](https://github.com/TheProjectLumina/LuminaClient/releases) and download the latest Lumina Client APK.
+1. **Download the APK**: Head to our [Releases page](https://github.com/demoneditz985-ctrl/ShadowClient/releases) and download the latest Vortex Client APK.
 2. **Allow Unknown Sources**: On your Android device, go to **Settings > Security** (or **Apps & Notifications** on newer versions) and enable **Install from Unknown Sources**.
 3. **Install the APK**: Open the downloaded APK file using a file manager, tap to install, and follow the prompts.
-4. **Launch Lumina**: Find Lumina in your app drawer, open it, and log in with your Minecraft account.
+4. **Launch Vortex**: Find Vortex in your app drawer, open it, and log in with your Minecraft account.
 5. **Configure Settings**: Adjust keybinds, enable desired tools, and customize the UI to suit your preferences.
 6. **Test on a Server**: Join a test server to ensure everything works as expected. For best results, start with a non-protected server to familiarize yourself with the features.
 
-If you encounter issues, visit our [Discord](https://discord.gg/78bqDpAHmK) for support or consult the [NOTICE](https://github.com/TheProjectLumina/LuminaClient/blob/main/NOTICE) file.
+If you encounter issues, open an [issue](https://github.com/demoneditz985-ctrl/ShadowClient/issues) or consult the [NOTICE](https://github.com/demoneditz985-ctrl/ShadowClient/blob/main/NOTICE) file.
 
 ---
 
 ## Development Setup
 
-For developers looking to contribute or customize Lumina, here’s how to set up your environment:
+For developers looking to contribute or customize Vortex, here’s how to set up your environment:
 
 1. **Clone the Repository**:
 
     ```bash
-    git clone https://github.com/TheProjectLumina/LuminaClient.git
+    git clone https://github.com/demoneditz985-ctrl/ShadowClient.git
     ```
 
    This downloads the full source code to your local machine.
@@ -80,14 +108,14 @@ For developers looking to contribute or customize Lumina, here’s how to set up
 2. **Open in Android Studio**:
 
    - Launch Android Studio and select **Open an existing project**.
-   - Choose the `LuminaClient` directory and open it.
+   - Choose the `ShadowClient` directory and open it.
 3. **Replace google-services.json**:
 
    - The repository includes a dummy `google-services.json` file, which must be replaced with your own for the app to build successfully.
    - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/).
    - Add an Android app to your Firebase project, following the prompts to download your `google-services.json` file.
-   - Place the downloaded `google-services.json` file in the `app` directory of the LuminaClient project, overwriting the dummy file.
-   - Ensure the package name in Firebase matches the one in `build.gradle` (e.g., `com.projectlumina.luminaclient`).
+   - Place the downloaded `google-services.json` file in the `app` directory of the VortexClient project, overwriting the dummy file.
+   - Ensure the package name in Firebase matches the one in `build.gradle` (e.g., `com.project.vortex.client`).
 4. **Sync Gradle**:
 
    - Click **Sync Project with Gradle Files** to fetch dependencies.
@@ -95,16 +123,16 @@ For developers looking to contribute or customize Lumina, here’s how to set up
 5. **Build and Test**:
 
    - Connect an Android device or configure an emulator.
-   - Select **Run > Run 'app'** to build and deploy Lumina.
+   - Select **Run > Run 'app'** to build and deploy Vortex.
    - Test changes on a local Minecraft Bedrock server to verify functionality.
 
-Refer to inline comments and the [NOTICE](https://github.com/TheProjectLumina/LuminaClient/blob/main/NOTICE) file for guidance. For advanced development tips, join our [Discord](https://discord.gg/78bqDpAHmK) or check our [YouTube](https://youtube.com/@prlumina) for tutorials.
+Refer to inline comments and the [NOTICE](https://github.com/demoneditz985-ctrl/ShadowClient/blob/main/NOTICE) file for guidance. The upstream project is documented at [TheProjectLumina/LuminaClient](https://github.com/TheProjectLumina/LuminaClient).
 
 ---
 
 ## Contribution Guidelines
 
-We welcome contributions to improve Lumina Client. To ensure a high-quality codebase, please adhere to these guidelines:
+We welcome contributions to improve Vortex Client. To ensure a high-quality codebase, please adhere to these guidelines:
 
 - **Code Quality**: Write clean, modular code with descriptive variable names and consistent formatting (follow Kotlin style guidelines).
 - **Commit Structure**: Use small, focused commits with clear messages (e.g., "Fixed lag issue on Hive server").
@@ -112,43 +140,42 @@ We welcome contributions to improve Lumina Client. To ensure a high-quality code
 - **Performance**: Optimize additions to maintain low latency, especially for combat and networking modules.
 - **Testing**: Test changes on multiple servers (e.g., CubeCraft, Hive) to ensure compatibility and stability.
 - **Pull Requests**: Submit PRs with a detailed description of changes, including the problem solved or feature added.
-- **Community Standards**: Follow our [Code of Conduct](https://github.com/TheProjectLumina/LuminaClient/blob/main/CODE_OF_CONDUCT.md) to maintain a respectful environment.
+- **Community Standards**: Follow our [Code of Conduct](https://github.com/demoneditz985-ctrl/ShadowClient/blob/main/CODE_OF_CONDUCT.md) to maintain a respectful environment.
 
-Before submitting, run a full build and test cycle to minimize errors. We review all contributions promptly and appreciate your efforts to enhance Lumina.
+Before submitting, run a full build and test cycle to minimize errors. We review all contributions promptly and appreciate your efforts to enhance Vortex.
 
 ---
 
 ## Usage Guidelines
 
-Lumina is designed for personal use and experimentation, but there are rules to follow:
+Vortex is designed for personal use and experimentation, but there are rules to follow:
 
 ### Permitted Uses
 
-- Modify Lumina for personal gameplay or to test new features.
-- Create educational content (e.g., YouTube videos, tutorials) showcasing Lumina’s capabilities.
-- Fork the repository for learning or to create derivative projects, provided you comply with the [GNU GPL v3.0](https://github.com/TheProjectLumina/LuminaClient/blob/main/LICENSE).
+- Modify Vortex for personal gameplay or to test new features.
+- Create educational content (e.g., YouTube videos, tutorials) showcasing Vortex’s capabilities.
+- Fork the repository for learning or to create derivative projects, provided you comply with the [GNU GPL v3.0](https://github.com/demoneditz985-ctrl/ShadowClient/blob/main/LICENSE).
 
 ### Prohibited Uses
 
 - Do not distribute modified versions without sharing the source code, as required by the GPL.
-- Do not claim Lumina as your own without crediting the Project Lumina team and its contributors.
-- Selling Lumina or derivatives without adhering to the GPL is prohibited.
-- Do not distribute Lumina as closed-source or under a non-GPL license.
-- The authors are not responsible for bans, damages, or issues arising from Lumina’s use.
+- Do not claim Vortex as your own without crediting the Project Vortex team and its contributors.
+- Selling Vortex or derivatives without adhering to the GPL is prohibited.
+- Do not distribute Vortex as closed-source or under a non-GPL license.
+- The authors are not responsible for bans, damages, or issues arising from Vortex’s use.
 
-See the [LICENSE](https://github.com/TheProjectLumina/LuminaClient/blob/main/LICENSE) and [NOTICE](https://github.com/TheProjectLumina/LuminaClient/blob/main/NOTICE) files for full details.
+See the [LICENSE](https://github.com/demoneditz985-ctrl/ShadowClient/blob/main/LICENSE) and [NOTICE](https://github.com/demoneditz985-ctrl/ShadowClient/blob/main/NOTICE) files for full details.
 
 ---
 
 ## Community and Support
 
-Join our community to connect with other Lumina users and developers:
+Join our community to connect with other Vortex users and developers:
 
 - **Discord**: Our [Discord server](https://discord.gg/78bqDpAHmK) is the best place for real-time support, bug reports, and feature discussions.
-- **YouTube**: Visit our [YouTube channel](https://youtube.com/@prlumina) for tutorials, feature demos, and project updates.
-- **GitHub**: Report issues or suggest enhancements on our [GitHub Issues page](https://github.com/TheProjectLumina/LuminaClient/issues).
+- **GitHub**: Report issues or suggest enhancements on our [GitHub Issues page](https://github.com/demoneditz985-ctrl/ShadowClient/issues).
 
-We strive to maintain a welcoming and inclusive community. Please review our [Code of Conduct](https://github.com/TheProjectLumina/LuminaClient/blob/main/CODE_OF_CONDUCT.md) before participating.
+We strive to maintain a welcoming and inclusive community. Please review our [Code of Conduct](https://github.com/demoneditz985-ctrl/ShadowClient/blob/main/CODE_OF_CONDUCT.md) before participating.
 
 ---
 
@@ -157,7 +184,7 @@ We strive to maintain a welcoming and inclusive community. Please review our [Co
 For detailed technical documentation, architecture diagrams, and in-depth guides:
 
 - **DeepWiki**: Explore our comprehensive [technical documentation](https://deepwiki.com/TheProjectLumina/LuminaClient) covering system architecture, relay system, packet processing, game modules, chunk data management, and more.
-- **Project Website**: Visit [projectlumina.online](https://projectlumina.online/#/docs/overview) for user guides and feature documentation.
+- **Project Website**: Visit [projectvortex.online](https://projectvortex.online/#/docs/overview) for user guides and feature documentation.
 
 The documentation is automatically generated and kept up-to-date with the codebase, providing detailed insights into:
 - Proxy/relay architecture and packet handling
@@ -171,9 +198,9 @@ The documentation is automatically generated and kept up-to-date with the codeba
 
 ## Credits and Acknowledgments
 
-Lumina Client Version 4 is a fork of [MuCuteClient](https://github.com/isuckatcodingfr/MuCuteClient) by SuMuCheng and [Protohax](https://github.com/hax0r31337/ProtoHax) by Haxor, with extensive enhancements by the Project Lumina team. Copyright © 2026 Project Lumina, with portions © 2026 MuCuteClient/SuMuCheng and © 2023 Protohax/Haxor.
+Vortex Client Version 4 is a fork of [MuCuteClient](https://github.com/isuckatcodingfr/MuCuteClient) by SuMuCheng and [Protohax](https://github.com/hax0r31337/ProtoHax) by Haxor, with extensive enhancements by the Project Vortex team. Copyright © 2026 Project Vortex, with portions © 2026 MuCuteClient/SuMuCheng and © 2023 Protohax/Haxor.
 
-We are deeply grateful to the open-source community for providing the tools and libraries that make Lumina possible. Below are the key projects we rely on:
+We are deeply grateful to the open-source community for providing the tools and libraries that make Vortex possible. Below are the key projects we rely on:
 
 ||||
 |---|---|---|
@@ -203,17 +230,17 @@ Additional dependencies include:
 - **[Amplitude Analytics](https://www.amplitude.com/)**: Analytics SDK for tracking user behavior and app performance.
 - **[Compose Colorful Sliders](https://github.com/SmartToolFactory/Compose-Colorful-Sliders)**: Custom UI components for interactive sliders in Jetpack Compose.
 - **[Coil Compose](https://coil-kt.github.io/coil/compose/)**: Image loading library for efficient image handling in Jetpack Compose.
-- **[AnimatedUX](https://github.com/TheProjectLumina/AnimatedUX)**: Custom animation library for dynamic UI transitions (project dependency).
-- **[Pixie](https://github.com/TheProjectLumina/Lumina-v4-dev/tree/main/Pixie)**: ImGui setup for Android using native surface rendering for optimized graphics (project dependency).
-- **[Lunaris](https://github.com/TheProjectLumina/Lumina-v4-dev/tree/main/Lunaris)**: Custom utility library for Lumina’s core functionality (project dependency).
-- **[SSC](https://github.com/TheProjectLumina/Lumina-v4-dev/tree/main/SSC)**: Custom Utility Dependency (project dependency).
+- **[AnimatedUX](https://github.com/TheProjectLumina/LuminaClient)**: Custom animation library for dynamic UI transitions (project dependency).
+- **[Pixie](https://github.com/TheProjectLumina/LuminaClient/tree/main/Pixie)**: ImGui setup for Android using native surface rendering for optimized graphics (project dependency).
+- **[Vortex](https://github.com/TheProjectLumina/LuminaClient/tree/main/Vortex)**: Custom utility library for Vortex’s core functionality (project dependency).
+- **[SSC](https://github.com/TheProjectLumina/LuminaClient/tree/main/SSC)**: Custom Utility Dependency (project dependency).
 - **[Android Native Surface](https://github.com/SsageParuders/Android_Native_Surface)**: Imgui And Native Rendering.
 - **[Sign Verification](https://github.com/aizuzi/SignatureVerificationDemo)**: Signature Verification And integrity Check
 - **[Kotlinx Serialization JSON](https://github.com/Kotlin/kotlinx.serialization)**: JSON serialization for Kotlin-based data handling.
 - **[AndroidX Core KTX](https://developer.android.com/jetpack/androidx/releases/core)**: Kotlin extensions for Android core APIs.
 - **[AndroidX Lifecycle Runtime KTX](https://developer.android.com/jetpack/androidx/releases/lifecycle)**: Lifecycle-aware components for reactive programming.
 - **[AndroidX Activity Compose](https://developer.android.com/jetpack/androidx/releases/activity)**: Support for Jetpack Compose in Android activities.
-- **[AndroidX Compose](https://developer.android.com/jetpack/compose)**: Modern Android UI toolkit for building Lumina’s interface.
+- **[AndroidX Compose](https://developer.android.com/jetpack/compose)**: Modern Android UI toolkit for building Vortex’s interface.
 - **[AndroidX UI Graphics](https://developer.android.com/jetpack/androidx/releases/compose-ui)**: Graphics utilities for Compose-based UI rendering.
 - **[AndroidX UI Tooling Preview](https://developer.android.com/jetpack/androidx/releases/compose-ui)**: Preview tools for Compose UI development.
 - **[AndroidX Material3](https://developer.android.com/jetpack/androidx/releases/compose-material3)**: Material You components for modern, adaptive UI design.
@@ -236,16 +263,16 @@ We also acknowledge [HavensGrace Studios](https://github.com/HavensGrace) by @ai
 
 ## License
 
-Lumina Client Version 4 is licensed under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.html). Earlier versions have separate freeware licenses; please review them if applicable. Key license terms:
+Vortex Client Version 4 is licensed under the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.html). Earlier versions have separate freeware licenses; please review them if applicable. Key license terms:
 
-- You may use, modify, and distribute Lumina, provided the source code is shared under the same GPL license.
+- You may use, modify, and distribute Vortex, provided the source code is shared under the same GPL license.
 - Derivative works must remain open-source and cannot impose additional restrictions.
 - The software is provided "as is" without warranties, and the authors are not liable for any damages or misuse.
 
-For complete details, see the [LICENSE](https://github.com/TheProjectLumina/LuminaClient/blob/main/LICENSE) and [NOTICE](https://github.com/TheProjectLumina/LuminaClient/blob/main/NOTICE) files.
+For complete details, see the [LICENSE](https://github.com/demoneditz985-ctrl/ShadowClient/blob/main/LICENSE) and [NOTICE](https://github.com/demoneditz985-ctrl/ShadowClient/blob/main/NOTICE) files.
 
 ---
 
 ## Final Thoughts
 
-Lumina Client is a form of love from the Project Lumina team, built for Minecraft Bedrock community. We’re excited to see how you use, customize, and contribute to Lumina. Join us on [Discord](https://discord.gg/78bqDpAHmK) or [YouTube](https://youtube.com/@prlumina) to stay connected, share your creations, and help shape the future of Lumina!
+Vortex Client is a form of love from the Vortex Client project, built for Minecraft Bedrock community. We’re excited to see how you use, customize, and contribute to Vortex. Ask questions and share your builds on the upstream [Discord](https://discord.gg/78bqDpAHmK), or open an [issue](https://github.com/demoneditz985-ctrl/ShadowClient/issues) on this repo for Vortex-specific problems!

@@ -1,0 +1,145 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ "main", "arena/b8e60820-shadowclient" ]
+  workflow_dispatch:
+    inputs:
+      build_type:
+        description: "Gradle build task"
+        required: true
+        default: "assembleRelease"
+        type: choice
+        options:
+          - assembleRelease
+          - assembleDebug
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    name: Build Vortex Client APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Prepare Android SDK / NDK / CMake
+        run: |
+          set -x
+          export ANDROID_HOME="${ANDROID_HOME:-/usr/local/lib/android/sdk}"
+          export ANDROID_SDK_ROOT="$ANDROID_HOME"
+          echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
+          echo "ANDROID_SDK_ROOT=$ANDROID_HOME" >> $GITHUB_ENV
+          ls -la "$ANDROID_HOME/cmdline-tools/latest/bin" || true
+          SDKMGR="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          yes | "$SDKMGR" --licenses > /dev/null 2>&1 || true
+          "$SDKMGR" --install \
+            "platform-tools" \
+            "platforms;android-36" \
+            "build-tools;36.0.0" \
+            "ndk;27.0.12077973" \
+            "cmake;3.22.1" 2>&1 | tail -20
+          echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/27.0.12077973" >> $GITHUB_ENV
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
+
+      - name: Generate Firebase stub config (repo ships none)
+        run: |
+          if [ ! -f app/google-services.json ]; then
+            APP_ID=$(grep -oP 'applicationId\s*=\s*"\K[^"]+' app/build.gradle.kts | head -1)
+            echo "Generating stub google-services.json for $APP_ID"
+            python3 - "$APP_ID" > app/google-services.json <<'PY'
+          import json, sys
+          app_id = sys.argv[1]
+          cfg = {
+            "project_info": {
+              "project_number": "000000000000",
+              "project_id": "vortex-client-stub",
+              "storage_bucket": "vortex-client-stub.appspot.com",
+            },
+            "client": [{
+              "client_info": {
+                "mobilesdk_app_id": "1:000000000000:android:0000000000000000000000",
+                "android_client_info": {"package_name": app_id},
+              },
+              "oauth_client": [],
+              "api_key": [{"current_key": "AIzaSyDUMMYDUMMYDUMMYDUMMYDUMMYDUMMY0"}],
+              "services": {"appinvite_service": {"other_platform_oauth_client": []}},
+            }],
+            "configuration_version": "1",
+          }
+          print(json.dumps(cfg, indent=2))
+          PY
+          fi
+          cat app/google-services.json
+
+      - name: Gradle cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', 'gradle/libs.versions.toml', 'gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: gradle-${{ runner.os }}-
+
+      - name: Build
+        run: |
+          set -o pipefail
+          TASK="${{ github.event.inputs.build_type }}"
+          TASK="${TASK:-assembleRelease}"
+          ./gradlew :app:$TASK --no-daemon --stacktrace 2>&1 | tee gradle-build.log
+          echo "exit=${PIPESTATUS[0]}"
+
+      - name: Summarise failure log
+        if: failure()
+        run: |
+          {
+            echo "## Gradle build failed"
+            echo '```'
+            tail -n 200 gradle-build.log 2>/dev/null || echo "no log"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Collect APKs
+        run: |
+          mkdir -p artifacts
+          find . -path ./artifacts -prune -o -name "*.apk" -print -exec cp {} artifacts/ \;
+          ls -la artifacts/ || true
+          cp gradle-build.log artifacts/ 2>/dev/null || true
+
+      - name: Upload APKs + build log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vortex-client-build
+          path: artifacts/
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Publish APK release
+        if: success() && hashFiles('artifacts/*.apk') != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION=$(grep -oP 'versionName\s*=\s*"\K[^"]+' app/build.gradle.kts | head -1)
+          VERSION="${VERSION:-4.1.8.2}"
+          TAG="vortex-v${VERSION}-build${{ github.run_number }}"
+          gh release create "$TAG" artifacts/*.apk \
+            --title "Vortex Client v${VERSION} (build ${{ github.run_number }})" \
+            --notes "Automated neon-purple Vortex Client build.
+
+          * Commit: \`${{ github.sha }}\`
+          * Branch: \`${{ github.ref_name }}\`
+          * Install on Android 9+ (Minecraft Bedrock 1.21.80+ recommended).
+
+          Rebranded fork of Lumina Client (Project Lumina, GPL-3.0-or-later)." \
+            --target "${{ github.sha }}" \
+            --latest

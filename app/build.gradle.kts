@@ -11,11 +11,11 @@ plugins {
 }
 
 android {
-    namespace = "com.project.lumina.client"
+    namespace = "com.project.vortex.client"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.project.lumina.client"
+        applicationId = "com.project.vortex.client"
         minSdk = 28
         targetSdk = 36
         versionCode = 12
@@ -140,10 +140,10 @@ dependencies {
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.30.1")
     implementation(project(":animatedux"))
     implementation(project(":Pixie"))
-    implementation(project(":Lunaris"))
+    implementation(project(":Vortex"))
     implementation(project(":SSC"))
     implementation(project(":TablerIcons"))
-    implementation(project(":lunarisrpc"))
+    implementation(project(":vortexrpc"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-crashlytics")
     implementation(platform("com.google.firebase:firebase-bom:33.13.0"))

@@ -1,6 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
-include(":Lunaris")
+include(":Vortex")
 include(":Pixie")
 include("SSC")
 include(":TablerIcons")
@@ -31,7 +31,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Lumina v4"
+rootProject.name = "Vortex v4"
 include(":app",
     ":Protocol:bedrock-codec",
     ":Protocol:bedrock-connection",
@@ -41,5 +41,5 @@ include(":app",
     ":Network:codec-rcon",
     ":Network:transport-raknet",
     ":minecraft-msftauth",
-    ":lunarisrpc",
+    ":vortexrpc",
     ":animatedux")

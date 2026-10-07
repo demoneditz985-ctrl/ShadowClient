@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name" translatable="false">Lumina Client</string>
+    <string name="app_name" translatable="false">Vortex Client</string>
     <string name="home">ホーム</string>
     <string name="what_is_this">これは何？</string>
-    <string name="introduction">LuminaClientは、MITM攻撃を使用して実装されたMinecraft Bedrockプラグインで、ゲームのメモリを変更せずにチートを可能にします。</string>
-    <string name="backend" translatable="false">Lunaris</string>
+    <string name="introduction">VortexClientは、MITM攻撃を使用して実装されたMinecraft Bedrockプラグインで、ゲームのメモリを変更せずにチートを可能にします。</string>
+    <string name="backend" translatable="false">Vortex</string>
     <string name="backend_introduction">いくつかの簡単な手順でMITM攻撃を実装します。</string>
     <string name="minecraft" translatable="false">Minecraft</string>
     <string name="recommended_version">推奨バージョン：%s</string>
@@ -19,9 +19,9 @@
     <string name="server_port">サーバーポート</string>
     <string name="tips">ヒント</string>
     <string name="change_game_settings_tip">ゲーム設定を変更する前に接続を切断する必要があります。</string>
-    <string name="backend_connected">LuminaRelayが接続されました</string>
+    <string name="backend_connected">VortexRelayが接続されました</string>
     <string name="start_game">ゲーム開始</string>
-    <string name="backend_disconnected">LuminaRelayが切断されました。</string>
+    <string name="backend_disconnected">VortexRelayが切断されました。</string>
     <string name="select_game">ゲームを選択</string>
     <string name="no_game_selected">ゲームが選択されていません</string>
     <string name="game_selector">ゲームセレクター</string>
@@ -266,12 +266,12 @@
     <string name="no_account_added">アカウントが追加されていません</string>
     <string name="add_a_gaming_account_to_get_started">ゲームアカウントを追加して開始してください</string>
     <string name="no_account_added_yet">まだアカウントが追加されていません</string>
-    <string name="about_lumina">Luminaについて</string>
-    <string name="lumina_introduction">Luminaは、Minecraft Bedrock Edition (MCBE)用のPvPチートクライアントで、複数のオペレーティングシステムで動作します。戦闘パフォーマンスとミニゲームサーバー向けの隠密なバイパスに重点を置いて構築されています。</string>
-    <string name="lumina_expectation">私たちの目標は、システムのパフォーマンスやセキュリティを損なうことなく、ゲームプレイを向上させる軽量で安定した機能豊富なソリューションを提供することです。</string>
-    <string name="lumina_compatibility">Android 9+デバイスおよびMinecraft Pocket Editionの64ビットおよび32ビットバージョンと互換性があり、最新のMinecraftバージョンを使用することをお勧めします。</string>
-    <string name="lumina_copyright">© 2026 Project Lumina — GNU GPLv3に基づくライセンス</string>
-    <string name="lumina_team">Project Luminaチームによって♥️で作られました</string>
+    <string name="about_vortex">Vortexについて</string>
+    <string name="vortex_introduction">Vortexは、Minecraft Bedrock Edition (MCBE)用のPvPチートクライアントで、複数のオペレーティングシステムで動作します。戦闘パフォーマンスとミニゲームサーバー向けの隠密なバイパスに重点を置いて構築されています。</string>
+    <string name="vortex_expectation">私たちの目標は、システムのパフォーマンスやセキュリティを損なうことなく、ゲームプレイを向上させる軽量で安定した機能豊富なソリューションを提供することです。</string>
+    <string name="vortex_compatibility">Android 9+デバイスおよびMinecraft Pocket Editionの64ビットおよび32ビットバージョンと互換性があり、最新のMinecraftバージョンを使用することをお勧めします。</string>
+    <string name="vortex_copyright">© 2026 Project Lumina · Vortex Client — GNU GPLv3に基づくライセンス</string>
+    <string name="vortex_team">Project Vortexチームによって♥️で作られました</string>
     <string name="connect_with_us">私たちとつながる</string>
 
     <!-- Chat Category Strings -->

@@ -2,7 +2,7 @@
 apply plugin: 'com.android.library'
 
 android {
-    namespace "com.project.lumina.imgui"
+    namespace "com.project.vortex.imgui"
     compileSdkVersion 30
 
 
