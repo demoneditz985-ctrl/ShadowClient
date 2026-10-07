@@ -30,11 +30,28 @@ class AuthWebView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : WebView(context, attrs) {
 
-    private var data: String? = null
+    /** Login entry point, reused by the "Try again" button on the error page. */
+    private val loginUrl: String
+        get() = "https://login.live.com/oauth20_authorize.srf" +
+                "?client_id=${deviceInfo!!.appId}" +
+                "&redirect_uri=https://login.live.com/oauth20_desktop.srf" +
+                "&response_type=code" +
+                "&scope=service::user.auth.xboxlive.com::MBI_SSL"
+
+    private var loadingPageHtml: String? = null
 
     private var account: Pair<String, String>? = null
 
     private val handler = Handler(Looper.getMainLooper())
+
+    /** Watchdog so the user never gets stuck on "Please wait" forever. */
+    private var stepToken = 0
+    private val watchdog = Runnable {
+        showErrorPage(
+            "This is taking longer than expected. Check your internet connection " +
+                    "(a VPN can block Xbox sign-in) and try again."
+        )
+    }
 
     var deviceInfo: XboxDeviceInfo? = null
 
@@ -45,11 +62,12 @@ class AuthWebView @JvmOverloads constructor(
             .removeAllCookies(null)
 
         settings.javaScriptEnabled = true
+        settings.domStorageEnabled = true
         webViewClient = AuthWebViewClient()
     }
 
     fun addAccount() {
-        loadUrl("https://login.live.com/oauth20_authorize.srf?client_id=${deviceInfo!!.appId}&redirect_uri=https://login.live.com/oauth20_desktop.srf&response_type=code&scope=service::user.auth.xboxlive.com::MBI_SSL")
+        loadUrl(loginUrl)
     }
 
     inner class AuthWebViewClient : WebViewClient() {
@@ -60,6 +78,7 @@ class AuthWebView @JvmOverloads constructor(
         ): Boolean {
             if (account != null && (request.url.scheme ?: "").startsWith("ms-xal")) {
                 thread {
+                    startStep()
                     try {
                         handler.post { showLoadingPage("Verifying your credentials...") }
 
@@ -72,7 +91,6 @@ class AuthWebView @JvmOverloads constructor(
                             ).readText()
                         )
 
-
                         val newAccount = Account(
                             username,
                             deviceInfo!!,
@@ -81,13 +99,12 @@ class AuthWebView @JvmOverloads constructor(
                         AccountManager.accounts.add(newAccount)
                         AccountManager.save()
 
-
                         AccountManager.selectAccount(newAccount)
 
-                        callback?.invoke(true)
+                        finishStep()
+                        handler.post { callback?.invoke(true) }
                     } catch (t: Throwable) {
-                        Log.e("AuthWebView", "Obtain access token: ${t.stackTraceToString()}")
-                        handler.post { loadData(t.stackTraceToString()) }
+                        failStep("Sign-in could not be completed", t)
                     }
                 }
                 return true
@@ -96,6 +113,7 @@ class AuthWebView @JvmOverloads constructor(
             if (url.host != "login.live.com" || url.encodedPath != "/oauth20_desktop.srf") {
                 if (url.queryParameter("res") == "cancel") {
                     Log.e("AuthWebView", "Action cancelled")
+                    finishStep()
                     callback?.invoke(false)
                     return false
                 }
@@ -105,11 +123,10 @@ class AuthWebView @JvmOverloads constructor(
 
             val authCode = url.queryParameter("code") ?: return false
 
-
             showLoadingPage("Setting up your account...")
             thread {
+                startStep()
                 try {
-                    // CRITICAL FIX: Pass isAuthCode = true because authCode is an authorization code, not a refresh token
                     val (accessToken, refreshToken) = deviceInfo!!.refreshToken(authCode, isAuthCode = true)
                     handler.post { showLoadingPage("Authenticating with Xbox...") }
 
@@ -125,11 +142,11 @@ class AuthWebView @JvmOverloads constructor(
                     } catch (e: XboxGamerTagException) {
                         account = accessToken to refreshToken
                         handler.post {
+                            showLoadingPage("Xbox profile needed...")
                             loadUrl(e.sisuStartUrl)
                         }
                         return@thread
                     }
-
 
                     val account = Account(username, deviceInfo!!, refreshToken)
                     while (AccountManager.accounts.map { it.remark }.contains(account.remark)) {
@@ -138,37 +155,152 @@ class AuthWebView @JvmOverloads constructor(
                     AccountManager.accounts.add(account)
                     AccountManager.save()
 
-
-
                     AccountManager.selectAccount(account)
 
-                    callback?.invoke(true)
+                    finishStep()
+                    handler.post { callback?.invoke(true) }
                 } catch (t: Throwable) {
-
-                    Log.e("AuthWebView", "Obtain access token: ${t.stackTraceToString()}")
-                    handler.post { loadData(t.stackTraceToString()) }
+                    failStep("Sign-in could not be completed", t)
                 }
             }
             return true
         }
+    }
 
+    // ---------------------------------------------------------------- helpers
+
+    private fun startStep() {
+        stepToken++
+        val token = stepToken
+        handler.postDelayed(watchdog, STEP_TIMEOUT_MS)
+        // cancel the watchdog if a newer step replaced this one
+        handler.postDelayed({
+            if (token != stepToken) handler.removeCallbacks(watchdog)
+        }, 0)
+    }
+
+    private fun finishStep() {
+        stepToken++
+        handler.removeCallbacks(watchdog)
+    }
+
+    private fun failStep(title: String, t: Throwable) {
+        finishStep()
+        Log.e("AuthWebView", "$title: ${t.stackTraceToString()}")
+        showErrorPage(describe(t))
+    }
+
+    /** Turns a raw exception into something a user can act on. */
+    private fun describe(t: Throwable): String {
+        val raw = t.message ?: t.javaClass.simpleName
+        return when {
+            raw.contains("401") || raw.contains("403") ->
+                "Xbox rejected the sign-in. Make sure the account owns Minecraft " +
+                        "(or is added to a family), then try again."
+            raw.contains("no Xbox profile", ignoreCase = true) ||
+                    raw.contains("gamertag", ignoreCase = true) ->
+                "This Microsoft account has no Xbox profile yet. Create a gamertag " +
+                        "at xbox.com, then sign in again."
+            raw.contains("did not return a certificate chain") ->
+                "Xbox sign-in was refused. Try signing in with a different account " +
+                        "or after disconnecting any VPN."
+            raw.contains("timeout", ignoreCase = true) || t is java.net.SocketTimeoutException ->
+                "The connection to Xbox timed out. Check your internet connection and try again."
+            t is java.net.UnknownHostException ->
+                "No internet connection. Connect to a network and try again."
+            else -> raw.take(300)
+        }
+    }
+
+    private fun showErrorPage(message: String) {
+        handler.post {
+            val safe = message
+                .replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+            val html = """
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                  <meta charset="UTF-8">
+                  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                  <style>
+                    body { margin:0; height:100vh; display:flex; align-items:center; justify-content:center;
+                           background:#0A0611; color:#F6EFFF; font-family:'Segoe UI',Arial,sans-serif; text-align:center; }
+                    .wrap { max-width: 90%; padding: 24px; }
+                    h1 { color:#B026FF; font-size:24px; margin-bottom:16px; }
+                    p { color:#D9C2FF; font-size:15px; line-height:1.5; }
+                    a.btn { display:inline-block; margin-top:28px; padding:14px 28px; border-radius:12px;
+                            background:#B026FF; color:#0A0611; font-weight:700; text-decoration:none; }
+                  </style>
+                </head>
+                <body>
+                  <div class="wrap">
+                    <h1>Sign-in failed</h1>
+                    <p>$safe</p>
+                    <a class="btn" href="$loginUrl">Try again</a>
+                  </div>
+                </body>
+                </html>
+            """.trimIndent()
+            val encoded = Base64.encodeToString(html.toByteArray(), Base64.DEFAULT)
+            loadData(encoded, "text/html; charset=UTF-8", "base64")
+        }
     }
 
     private fun getUsernameFromChain(chains: String): String {
-        val body = JsonParser.parseString(chains).asJsonObject.getAsJsonArray("chain")
-        for (chain in body) {
-            val chainBody =
-                JsonParser.parseString(base64Decode(chain.asString.split(".")[1]).toString(Charsets.UTF_8)).asJsonObject
-            if (chainBody.has("extraData")) {
-                val extraData = chainBody.getAsJsonObject("extraData")
-                return extraData.get("displayName").asString
-            }
+        val root = try {
+            JsonParser.parseString(chains).asJsonObject
+        } catch (e: Exception) {
+            // not JSON at all (HTML error page, empty body, ...)
+            throw IllegalStateException(
+                "Xbox returned an unexpected response: ${chains.take(300)}"
+            )
         }
-        error("no username found")
+
+        // getAsJsonArray() returns null when the member is missing - iterating it
+        // was the NullPointerException reported from this method.
+        val body = root.getAsJsonArray("chain")
+            ?: throw IllegalStateException(
+                "Xbox did not return a profile chain: ${chains.take(300)}"
+            )
+
+        for (chain in body) {
+            val parts = (chain.asString).split(".")
+            if (parts.size < 2) continue
+
+            val chainBody = try {
+                JsonParser.parseString(
+                    base64Decode(parts[1]).toString(Charsets.UTF_8)
+                ).asJsonObject
+            } catch (e: Exception) {
+                continue
+            }
+
+            val extraData = chainBody.getAsJsonObject("extraData") ?: continue
+
+            val displayName = extraData.get("displayName")
+                ?.takeIf { !it.isJsonNull }
+                ?.asString
+                ?.takeIf { it.isNotBlank() }
+            if (displayName != null) return displayName
+
+            // no gamertag yet -> let the caller run the gamertag creation flow
+            val xuid = extraData.get("xid")
+                ?.takeIf { !it.isJsonNull }
+                ?.asString
+                ?.takeIf { it.isNotBlank() }
+            if (xuid != null) return "Player${xuid.takeLast(6)}"
+        }
+
+        throw IllegalStateException(
+            "This Microsoft account has no Xbox profile yet, so Vortex cannot read a gamertag."
+        )
     }
 
     fun showLoadingPage(title: String) {
-        val data = this.data ?: context.assets.open("loading.html").readBytes().decodeToString()
+        val data = loadingPageHtml
+            ?: context.assets.open("loading.html").readBytes().decodeToString().also { loadingPageHtml = it }
         val replacedData = data.replace("\$title", title)
         val encodedText = Base64.encodeToString(replacedData.toByteArray(), Base64.DEFAULT)
         loadData(encodedText, "text/html; charset=UTF-8", "base64")
@@ -178,4 +310,12 @@ class AuthWebView @JvmOverloads constructor(
         loadData(text, "text/html", "UTF-8")
     }
 
+    override fun onDetachedFromWindow() {
+        finishStep()
+        super.onDetachedFromWindow()
+    }
+
+    private companion object {
+        const val STEP_TIMEOUT_MS = 90_000L
+    }
 }

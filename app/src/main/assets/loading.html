@@ -12,8 +12,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #121212;
-            color: white;
+            background-color: #0A0611;
+            color: #F6EFFF;
             font-family: 'Segoe UI', Arial, sans-serif;
             overflow: hidden;
         }
@@ -25,16 +25,17 @@
         }
         
         h1 {
-            font-size: 28px;
-            font-weight: 500;
+            font-size: 26px;
+            font-weight: 600;
             margin-bottom: 40px;
-            color: white;
+            color: #B026FF;
+            text-shadow: 0 0 24px rgba(176, 38, 255, 0.45);
         }
         
         .loading-bar {
             width: 250px;
             height: 6px;
-            background-color: rgba(255, 255, 255, 0.2);
+            background-color: rgba(176, 38, 255, 0.18);
             border-radius: 10px;
             margin: 0 auto 40px auto;
             position: relative;
@@ -44,7 +45,7 @@
         .progress {
             position: absolute;
             height: 100%;
-            background: linear-gradient(90deg, #9370DB, #FFB7C5);
+            background: linear-gradient(90deg, #B026FF, #C77DFF, #E455FF);
             border-radius: 10px;
             width: 40%;
             animation: loading 1.5s infinite ease-in-out;
@@ -52,7 +53,7 @@
         
         .message {
             font-size: 16px;
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(217, 194, 255, 0.9);
             margin-top: 20px;
         }
         
@@ -90,7 +91,7 @@
             width: 200px;
             height: 200px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(147, 112, 219, 0.1), transparent 70%);
+            background: radial-gradient(circle, rgba(176, 38, 255, 0.22), transparent 70%);
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -112,7 +113,7 @@
             <div class="progress"></div>
         </div>
         <div class="message">
-            Please wait, securing your account<span class="dots"></span>
+            Please wait<span class="dots"></span>
         </div>
     </div>
 </body>

@@ -99,9 +99,25 @@ fun fetchRawChain(identityToken: String, publicKey: PublicKey): Reader {
         .build()
 
     val response = HttpUtils.client.newCall(request).execute()
-    assert(response.code == 200) { "Http code ${response.code}" }
 
-    return response.body!!.charStream()
+    // Upstream had `assert(response.code == 200)` here - assertions are disabled
+    // on Android, so a 401/403 error body was parsed as if it were a chain and
+    // blew up later with a NullPointerException. Validate for real.
+    val bodyText = response.body?.string().orEmpty()
+
+    if (response.code != 200) {
+        throw AuthChainException(
+            "Authentication server returned HTTP ${response.code}: ${bodyText.take(300)}"
+        )
+    }
+
+    if (!bodyText.contains("\"chain\"")) {
+        throw AuthChainException(
+            "Authentication server did not return a certificate chain: ${bodyText.take(300)}"
+        )
+    }
+
+    return bodyText.reader()
 }
 
 fun fetchIdentityToken(accessToken: String, deviceInfo: XboxDeviceInfo): XboxIdentityToken {
@@ -174,6 +190,9 @@ fun fetchIdentityToken(accessToken: String, deviceInfo: XboxDeviceInfo): XboxIde
 
     return XboxIdentityToken(xstsToken.toIdentityToken(), Instant.parse(xstsToken.notAfter).epochSecond)
 }
+
+/** Thrown when the Minecraft authentication service refuses to hand out a chain. */
+class AuthChainException(message: String) : IllegalStateException(message)
 
 class XboxGamerTagException(val sisuStartUrl: String)
     : IllegalStateException("Have you registered a Xbox GamerTag? You can register it here: $sisuStartUrl")
