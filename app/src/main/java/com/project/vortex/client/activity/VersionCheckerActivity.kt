@@ -65,6 +65,11 @@ class VersionCheckerViewModel : ViewModel() {
     private val _versionConfig = MutableStateFlow<VersionConfig?>(null)
     val versionConfig: StateFlow<VersionConfig?> = _versionConfig.asStateFlow()
 
+    // true when the version API could not be reached (dead host / offline).
+    // In that case the version gate must not block the app.
+    private val _configUnavailable = MutableStateFlow(false)
+    val configUnavailable: StateFlow<Boolean> = _configUnavailable.asStateFlow()
+
     fun loadVersionConfig(context: android.content.Context, configUrl: String) {
         viewModelScope.launch {
             _versionConfig.value = try {
@@ -118,6 +123,10 @@ class VersionCheckerViewModel : ViewModel() {
                     supportedVersions.add(supportedVersionsJson.getString(i))
                 }
 
+                if (supportedVersions.isEmpty()) {
+                    _configUnavailable.value = true
+                }
+
                 VersionConfig(
                     minimumVersion = jsonObject.optString("minimumVersion", "-1"),
                     recommendedVersion = jsonObject.optString("recommendedVersion", "-1"),
@@ -127,6 +136,8 @@ class VersionCheckerViewModel : ViewModel() {
             } catch (e: Exception) {
                 println("Error loading version config: ${e.message}")
                 e.printStackTrace()
+                // API offline: do not gate the app on an unavailable config
+                _configUnavailable.value = true
                 VersionConfig(
                     minimumVersion = "Dead API",
                     recommendedVersion = "API Is Offline",
@@ -157,7 +168,11 @@ class VersionCheckerActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val versionConfig by viewModel.versionConfig.collectAsState()
+                    val configUnavailable by viewModel.configUnavailable.collectAsState()
                     when {
+                        // Version API unreachable: start the app instead of blocking it
+                        configUnavailable -> startMainActivity()
+
                         versionConfig == null -> {
                             val kson = HashCat.getInstance()
                             val matchJson = kson.LintHashInit(this)
@@ -200,6 +215,9 @@ class VersionCheckerActivity : ComponentActivity() {
     }
 
     private fun isCompatibleVersion(version: String?, config: VersionConfig): Boolean {
+        // No usable config -> never block the app (upstream blocked everyone
+        // once its version API went offline).
+        if (config.supportedVersions.isEmpty() || config.supportedVersions == listOf("-1")) return true
         if (version == null) return false
         return config.supportedVersions.contains(version)
     }

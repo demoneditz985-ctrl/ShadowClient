@@ -52,6 +52,10 @@ class LaunchActivity : ComponentActivity() {
 
             if (hasValidSession) {
                 initializeApp(amplitude)
+            } else {
+                // never reached any more (checkSession always returns true),
+                // but keep the app usable instead of showing a blank screen
+                initializeApp(amplitude)
             }
 
         } else {
@@ -114,7 +118,11 @@ class LaunchActivity : ComponentActivity() {
         val verifier = HashCat.getInstance()
         val isValid = verifier.LintHashInit(this)
         if (isValid) {
-            FirebaseCrashlytics.getInstance().log("App started")
+            // Crashlytics is best-effort: this build ships a placeholder
+            // google-services.json, so never let it break startup.
+            try {
+                FirebaseCrashlytics.getInstance().log("App started")
+            } catch (_: Throwable) { }
         }
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
@@ -132,15 +140,19 @@ class LaunchActivity : ComponentActivity() {
             }
         }
 
+        // The license/session gate is gone, so only mention it when a session
+        // actually exists (otherwise this used to say "Session valid for 0h 0m").
         val remainingTime = sessionManager.getRemainingSessionTime()
-        val hours = remainingTime / (60 * 60 * 1000)
-        val minutes = (remainingTime % (60 * 60 * 1000)) / (60 * 1000)
+        if (remainingTime > 0L) {
+            val hours = remainingTime / (60 * 60 * 1000)
+            val minutes = (remainingTime % (60 * 60 * 1000)) / (60 * 1000)
 
-        Toast.makeText(
-            this,
-            "Session valid for ${hours}h ${minutes}m",
-            Toast.LENGTH_LONG
-        ).show()
+            Toast.makeText(
+                this,
+                "Session valid for ${hours}h ${minutes}m",
+                Toast.LENGTH_LONG
+            ).show()
+        }
     }
 }
 

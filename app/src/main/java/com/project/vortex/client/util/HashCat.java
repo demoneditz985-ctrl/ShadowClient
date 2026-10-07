@@ -38,37 +38,20 @@ public class HashCat {
     }
 
 
+    /**
+     * Signature gate removed for the Vortex build.
+     *
+     * Upstream compared the APK signing certificate against a hardcoded SHA1
+     * (valid.cpp) and, on mismatch, showed an empty toast, called finishAffinity(),
+     * killed the process and called System.exit(0) - which looked exactly like an
+     * instant crash for anyone running a self-built / re-signed APK.
+     *
+     * The check is now a no-op so the app simply starts.
+     */
     public boolean LintHashInit(Context context) {
-        boolean isValid = checkSha1(context);
-
-        if (!isValid) {
-            String sha1 = getSha1Value(context);
-            String errorMessage = "";
-            if (context instanceof Activity) {
-                ((Activity) context).runOnUiThread(() -> {
-                    Toast.makeText(context, errorMessage, Toast.LENGTH_LONG).show();
-                });
-
-                
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                Log.e(TAG, errorMessage);
-                
-                if (context instanceof Activity) {
-                    ((Activity) context).finishAffinity();
-                }
-                Process.killProcess(Process.myPid());
-                System.exit(0);
-            }
-            return false;
-        }
-
+        Log.i(TAG, "Signature gate disabled (Vortex build)");
         return true;
     }
-
 
     public String getSha1Value(Context context) {
         try {

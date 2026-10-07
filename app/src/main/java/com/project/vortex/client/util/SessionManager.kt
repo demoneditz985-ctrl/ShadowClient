@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.Base64
-import androidx.browser.customtabs.CustomTabsIntent
 import java.io.File
 import java.net.URLEncoder
 import java.security.MessageDigest
@@ -22,13 +21,22 @@ class SessionManager(private val context: Context) {
         private const val SECRET_SALT = "pFzBVr9YzofdxjDrJO1xdW=qeEF2VVIq"
     }
 
+    /**
+     * License gate removed for the Vortex build.
+     *
+     * Upstream opened a Custom Tab on every launch when no local session existed
+     * (a Linkvertise ad gate that redirected to an auth page), then called
+     * activity.finish() - so opening the app threw the user into a browser and
+     * closed the app.
+     *
+     * Vortex just starts: always "valid", never opens a web page.
+     */
     fun checkSession(activity: Activity): Boolean {
-        if (hasValidSession()) {
+        if (!hasValidSession()) {
+            // nothing to do - no web page, no finishing the activity
             return true
         }
-
-        startAuthFlow(activity)
-        return false
+        return true
     }
 
     fun validateAndSaveSession(key: String, req: String): Boolean {
@@ -100,29 +108,12 @@ class SessionManager(private val context: Context) {
         sessionFile.writeText(encodedData)
     }
 
+    /**
+     * Disabled for the Vortex build - this used to launch the external
+     * authentication web page (Linkvertise) and close the activity.
+     */
     private fun startAuthFlow(activity: Activity) {
-        // Generate random request code
-        val reqCode = generateRandomReq()
-
-        // Store req code for later validation
-        storeReqCode(reqCode)
-
-        // Create your domain URL with req parameter
-        val yourDomainUrl = "$YOUR_DOMAIN?req=$reqCode"
-
-        // Generate Linkvertise URL pointing to your domain
-        val linkvertiseUrl = generateLinkvertiseUrl(
-            userId = LINKVERTISE_USER_ID,
-            targetLink = yourDomainUrl
-        )
-
-        // Launch Custom Tab
-        val customTabsIntent = CustomTabsIntent.Builder()
-            .setShowTitle(true)
-            .build()
-
-        customTabsIntent.launchUrl(activity, Uri.parse(linkvertiseUrl))
-        activity.finish()
+        // intentionally left as a no-op: no Custom Tab, no finish()
     }
 
     private fun storeReqCode(reqCode: String) {
