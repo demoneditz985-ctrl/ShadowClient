@@ -86,6 +86,32 @@ fun forgeSkinData(keyPair: KeyPair, skinData: JsonObject): String {
     return signJWT(gson.toJson(skinData), keyPair)
 }
 
+/**
+ * Xbox sign-in occasionally fails on the first attempt (handshake rejected by a
+ * flaky network, transient 5xx, dropped connection). Retry those once before
+ * giving up, but never retry a definitive auth failure such as HTTP 401.
+ */
+internal fun <T> withAuthRetry(attempts: Int = 2, block: () -> T): T {
+    var last: Throwable? = null
+    repeat(attempts) { attempt ->
+        try {
+            return block()
+        } catch (t: Throwable) {
+            last = t
+            val message = (t.message ?: "").lowercase()
+            val worthRetrying = t is java.io.IOException &&
+                    !message.contains("401") &&
+                    !message.contains("403")
+            if (!worthRetrying || attempt == attempts - 1) throw t
+            try {
+                Thread.sleep(600L * (attempt + 1))
+            } catch (_: InterruptedException) {
+            }
+        }
+    }
+    throw last ?: IllegalStateException("authentication failed")
+}
+
 fun fetchRawChain(identityToken: String, publicKey: PublicKey): Reader {
     val data = JsonObject().apply {
         addProperty("identityPublicKey", Base64.getEncoder().withoutPadding().encodeToString(publicKey.encoded))
@@ -98,7 +124,7 @@ fun fetchRawChain(identityToken: String, publicKey: PublicKey): Reader {
         .header("Authorization", identityToken)
         .build()
 
-    val response = HttpUtils.client.newCall(request).execute()
+    val response = withAuthRetry { HttpUtils.client.newCall(request).execute() }
 
     // Upstream had `assert(response.code == 200)` here - assertions are disabled
     // on Android, so a 401/403 error body was parsed as if it were a chain and
@@ -234,7 +260,7 @@ data class XboxDeviceInfo(
             .post(form.build())
             .build()
 
-        val response = HttpUtils.client.newCall(request).execute()
+        val response = withAuthRetry { HttpUtils.client.newCall(request).execute() }
         val bodyText = response.body!!.string()
         val body = JsonParser.parseString(bodyText).asJsonObject
 

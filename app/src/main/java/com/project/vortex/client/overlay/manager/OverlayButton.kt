@@ -7,6 +7,8 @@ import android.graphics.BlurMaskFilter
 import android.view.WindowManager
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.*
@@ -17,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
@@ -106,8 +109,20 @@ class OverlayButton : OverlayWindow() {
             modifier = Modifier
                 .size(48.dp)
                 .clip(RoundedCornerShape(24.dp))
+                .background(Color(0xFF0A0611).copy(alpha = 0.55f))
+                .border(
+                    width = 1.dp,
+                    brush = Brush.linearGradient(
+                        listOf(
+                            Color(0xFFB026FF),
+                            Color(0xFFC77DFF).copy(alpha = 0.25f),
+                            Color(0xFFE455FF).copy(alpha = 0.6f)
+                        )
+                    ),
+                    shape = RoundedCornerShape(24.dp)
+                )
                 .clipToBounds()
-                .padding(5.dp)
+                .padding(7.dp)
                 .pointerInput(Unit) {
                     detectDragGestures { _, drag ->
                         _layoutParams.x += drag.x.toInt()

@@ -72,6 +72,26 @@ class AuthWebView @JvmOverloads constructor(
 
     inner class AuthWebViewClient : WebViewClient() {
 
+        override fun onReceivedSslError(
+            view: WebView?,
+            handler: android.webkit.SslErrorHandler?,
+            error: android.net.http.SslError?
+        ) {
+            // Never proceed through an invalid certificate during sign-in; just explain it.
+            handler?.cancel()
+            error?.let { errors.ssl(it) }
+        }
+
+        override fun onReceivedError(
+            view: WebView?,
+            request: WebResourceRequest?,
+            error: android.webkit.WebResourceError?
+        ) {
+            if (request?.isForMainFrame == true) {
+                errors.page(error?.description?.toString() ?: "network error", request.url?.toString())
+            }
+        }
+
         override fun shouldOverrideUrlLoading(
             view: WebView,
             request: WebResourceRequest
@@ -167,6 +187,24 @@ class AuthWebView @JvmOverloads constructor(
         }
     }
 
+    inner class Errors {
+        fun ssl(error: android.net.http.SslError) = showErrorPage(
+            "The sign-in page could not be opened securely.\n\n" +
+                    "1. Turn on automatic date & time in your phone settings.\n" +
+                    "2. Turn off any VPN, ad-blocker or Private DNS.\n" +
+                    "3. Try another network (switch between Wi-Fi and mobile data).",
+            error.url ?: "SSL error"
+        )
+
+        fun page(description: String, failingUrl: String?) = showErrorPage(
+            "The sign-in page could not be loaded ($description). Check your internet " +
+                    "connection and press Try again.",
+            failingUrl ?: description
+        )
+    }
+
+    val errors = Errors()
+
     // ---------------------------------------------------------------- helpers
 
     private fun startStep() {
@@ -187,7 +225,8 @@ class AuthWebView @JvmOverloads constructor(
     private fun failStep(title: String, t: Throwable) {
         finishStep()
         Log.e("AuthWebView", "$title: ${t.stackTraceToString()}")
-        showErrorPage(describe(t))
+        val raw = (t.message ?: t.javaClass.simpleName).take(400)
+        showErrorPage(describe(t), raw)
     }
 
     /** Turns a raw exception into something a user can act on. */
@@ -208,16 +247,29 @@ class AuthWebView @JvmOverloads constructor(
                 "The connection to Xbox timed out. Check your internet connection and try again."
             t is java.net.UnknownHostException ->
                 "No internet connection. Connect to a network and try again."
+            raw.contains("SSL", ignoreCase = true) ||
+                    raw.contains("handshake", ignoreCase = true) ||
+                    raw.contains("certificate", ignoreCase = true) ||
+                    t is javax.net.ssl.SSLException ->
+                "The secure connection to Xbox could not be established.\n\n" +
+                        "1. Turn on automatic date & time in your phone settings.\n" +
+                        "2. Turn off any VPN, ad-blocker or Private DNS.\n" +
+                        "3. Try another network (switch between Wi-Fi and mobile data)."
             else -> raw.take(300)
         }
     }
 
-    private fun showErrorPage(message: String) {
+    private fun showErrorPage(message: String, details: String = message) {
         handler.post {
             val safe = message
                 .replace("&", "&amp;")
                 .replace("<", "&lt;")
                 .replace(">", "&gt;")
+            val detailsEscaped = details
+                .replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .take(400)
             val html = """
                 <!DOCTYPE html>
                 <html lang="en">
@@ -232,6 +284,7 @@ class AuthWebView @JvmOverloads constructor(
                     p { color:#D9C2FF; font-size:15px; line-height:1.5; }
                     a.btn { display:inline-block; margin-top:28px; padding:14px 28px; border-radius:12px;
                             background:#B026FF; color:#0A0611; font-weight:700; text-decoration:none; }
+                    .detail { margin-top:26px; font-size:11px; color:#8A7BA8; word-break:break-word; }
                   </style>
                 </head>
                 <body>
@@ -239,6 +292,7 @@ class AuthWebView @JvmOverloads constructor(
                     <h1>Sign-in failed</h1>
                     <p>$safe</p>
                     <a class="btn" href="$loginUrl">Try again</a>
+                    <p class="detail">Details: $detailsEscaped</p>
                   </div>
                 </body>
                 </html>

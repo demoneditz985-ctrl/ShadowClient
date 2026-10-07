@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.view.WindowManager
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -34,6 +35,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -240,32 +242,6 @@ class OverlayClickGUI : OverlayWindow() {
                                     context.startActivity(intent)
                                 }
                         )
-                        Icon(
-                            painter = painterResource(id = R.drawable.browser_24),
-                            contentDescription = "Help",
-                            tint = TheNotBackgroundColorForOverlayUi,
-                            modifier = Modifier
-                                .size(24.dp)
-                                .clickable { 
-                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/demoneditz985-ctrl/ShadowClient")).apply {
-                                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                    }
-                                    context.startActivity(intent)
-                                }
-                        )
-                        Icon(
-                            painter = painterResource(id = R.drawable.circle_book_open_24),
-                            contentDescription = "Trigger_Gui",
-                            tint = TheNotBackgroundColorForOverlayUi,
-                            modifier = Modifier
-                                .size(24.dp)
-                                .clickable { 
-                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/demoneditz985-ctrl/ShadowClient")).apply {
-                                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                    }
-                                    context.startActivity(intent)
-                                }
-                        )
                     }
 
                     
@@ -281,29 +257,34 @@ class OverlayClickGUI : OverlayWindow() {
                             )
                             .border(
                                 width = 1.dp,
-                                color = TheNotBackgroundColorForOverlayUi,
+                                brush = Brush.linearGradient(
+                                    listOf(
+                                        Color(0xFFB026FF),
+                                        Color(0xFFC77DFF).copy(alpha = 0.35f)
+                                    )
+                                ),
                                 shape = RoundedCornerShape(20.dp)
                             ),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.moon_stars_24),
-                            contentDescription = "Logo",
-                            tint = TheNotBackgroundColorForOverlayUi,
+                        Image(
+                            painter = painterResource(id = R.drawable.vortex_logo),
+                            contentDescription = "Vortex Logo",
                             modifier = Modifier
-                                .size(50.dp)
-                                .padding(top = 0.dp, bottom = 0.dp, start = 25.dp, end = 0.dp)
+                                .size(34.dp)
+                                .padding(start = 16.dp)
                         )
                         Text(
-                            text = "L U M I N A",
+                            text = "V O R T E X",
                             style = TextStyle(
                                 fontSize = 23.sp,
                                 fontFamily = pretzelsuwu,
-                                fontWeight = FontWeight.Thin,
-                                color = TheNotBackgroundColorForOverlayUi
+                                fontWeight = FontWeight.Normal,
+                                color = Color(0xFFB026FF),
+                                letterSpacing = 2.sp
                             ),
                             modifier = Modifier
-                                .padding(top = 2.dp, bottom = 2.dp, start = 30.dp, end = 2.dp)
+                                .padding(start = 12.dp, end = 2.dp)
                         )
                     }
                 }
