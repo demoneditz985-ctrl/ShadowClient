@@ -3,7 +3,7 @@
 //
 
 /*
- * © Project Lumina 2026 — Licensed under GNU GPLv3
+ * © Project Vortex 2026 — Licensed under GNU GPLv3
  * You are free to use, modify, and redistribute this code under the terms
  * of the GNU General Public License v3. See the LICENSE file for details.
  *
@@ -41,7 +41,7 @@
 #include "hsv_to_rgb.h"
 
 extern "C" JNIEXPORT jfloatArray JNICALL
-Java_com_project_lumina_client_CPPBridge_NativeHsvToRgb_hsvToRgb(JNIEnv* env, jclass, jfloat h) {
+Java_com_project_vortex_client_CPPBridge_NativeHsvToRgb_hsvToRgb(JNIEnv* env, jclass, jfloat h) {
 
     RGB rgb = hsvToRgb(h);
 

@@ -4,7 +4,7 @@
 
 extern "C"
 JNIEXPORT jstring JNICALL
-Java_com_project_lumina_client_util_HashCat_getSignaturesSha1(
+Java_com_project_vortex_client_util_HashCat_getSignaturesSha1(
         JNIEnv *env,
         jobject,
         jobject contextObject) {
@@ -13,7 +13,7 @@ Java_com_project_lumina_client_util_HashCat_getSignaturesSha1(
 }
 extern "C"
 JNIEXPORT jboolean JNICALL
-Java_com_project_lumina_client_util_HashCat_checkSha1(
+Java_com_project_vortex_client_util_HashCat_checkSha1(
         JNIEnv *env,
         jobject,
         jobject contextObject) {
@@ -26,7 +26,7 @@ return result;
 }
 extern "C"
 JNIEXPORT jstring JNICALL
-Java_com_project_lumina_client_util_HashCat_getToken(
+Java_com_project_vortex_client_util_HashCat_getToken(
         JNIEnv *env,
         jobject,
         jobject contextObject,

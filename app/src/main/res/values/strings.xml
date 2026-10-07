@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name" translatable="false">Lumina Client</string>
+    <string name="app_name" translatable="false">Vortex Client</string>
     <string name="home">Home</string>
     <string name="what_is_this">What\'s this?</string>
-    <string name="introduction">LuminaClient is a Minecraft Bedrock plugin implemented using a MITM attack, which allows you to cheat without modifying the game\'s memory.</string>
-    <string name="backend" translatable="false">Lunaris</string>
+    <string name="introduction">VortexClient is a Minecraft Bedrock plugin implemented using a MITM attack, which allows you to cheat without modifying the game\'s memory.</string>
+    <string name="backend" translatable="false">Vortex</string>
     <string name="backend_introduction">Implement MITM attack in a few simple steps.</string>
     <string name="minecraft" translatable="false">Minecraft</string>
     <string name="recommended_version">Recommended version: %s</string>
@@ -19,9 +19,9 @@
     <string name="server_port">Server port</string>
     <string name="tips">Tips</string>
     <string name="change_game_settings_tip">You need to disconnect before changing game settings.</string>
-    <string name="backend_connected">LuminaRelay Connected</string>
+    <string name="backend_connected">VortexRelay Connected</string>
     <string name="start_game">Start Game</string>
-    <string name="backend_disconnected">LuminaRelay disconnected.</string>
+    <string name="backend_disconnected">VortexRelay disconnected.</string>
     <string name="select_game">Select game</string>
     <string name="no_game_selected">No game selected</string>
     <string name="game_selector">Game Selector</string>
@@ -265,12 +265,12 @@
     <string name="no_account_added">No Accounts Added</string>
     <string name="add_a_gaming_account_to_get_started">Add a gaming account to get started</string>
     <string name="no_account_added_yet">No accounts added yet</string>
-    <string name="about_lumina">About Lumina</string>
-    <string name="lumina_introduction">Lumina is a Minecraft Bedrock Edition (MCBE) PvP cheat client that works across multiple operating systems. We\'ve built it with a focus on combat performance and sneaky bypasses for minigame servers.</string>
-    <string name="lumina_expectation">Our goal is to provide a lightweight, stable, and feature-rich solution that enhances gameplay without compromising system performance or security.</string>
-    <string name="lumina_compatibility">Compatible with Android 9+ devices and both 64-bit and 32-bit versions of Minecraft Pocket Edition, with the latest Minecraft version recommended for optimal experience.</string>
-    <string name="lumina_copyright">© 2026 Project Lumina — Licensed under GNU GPLv3</string>
-    <string name="lumina_team">Made with ♥️ by the Project Lumina team</string>
+    <string name="about_vortex">About Vortex</string>
+    <string name="vortex_introduction">Vortex is a Minecraft Bedrock Edition (MCBE) PvP cheat client that works across multiple operating systems. We\'ve built it with a focus on combat performance and sneaky bypasses for minigame servers.</string>
+    <string name="vortex_expectation">Our goal is to provide a lightweight, stable, and feature-rich solution that enhances gameplay without compromising system performance or security.</string>
+    <string name="vortex_compatibility">Compatible with Android 9+ devices and both 64-bit and 32-bit versions of Minecraft Pocket Edition, with the latest Minecraft version recommended for optimal experience.</string>
+    <string name="vortex_copyright">© 2026 Project Vortex — Licensed under GNU GPLv3</string>
+    <string name="vortex_team">Made with ♥️ by the Project Vortex team</string>
     <string name="connect_with_us">Connect with us</string>
 
     <!-- Chat Category Strings -->

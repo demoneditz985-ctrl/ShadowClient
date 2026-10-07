@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "io.lumina.luminaux"
+    namespace = "io.vortex.vortexux"
     compileSdk = 36
 
     defaultConfig {
