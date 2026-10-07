@@ -1,5 +1,5 @@
 /*
- * © Project Vortex 2026 — Licensed under GNU GPLv3
+ * © Project Lumina 2026 — Licensed under GNU GPLv3
  */
 
 package com.project.vortex.client.overlay.mods

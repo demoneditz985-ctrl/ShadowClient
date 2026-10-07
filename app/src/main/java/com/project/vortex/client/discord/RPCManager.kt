@@ -143,7 +143,7 @@ class RPCManager(
             firstButtonUrl = "minecraft://connect/?serverUrl=$serverIp&serverPort=$serverPort"
         } else {
             firstButtonLabel = "Download"
-            firstButtonUrl = "https://projectvortex.online"
+            firstButtonUrl = "https://github.com/demoneditz985-ctrl/ShadowClient"
         }
 
         val activityBuilder = Activity.Builder()

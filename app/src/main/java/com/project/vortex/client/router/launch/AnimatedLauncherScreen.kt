@@ -129,7 +129,7 @@ fun AnimatedLauncherScreen() {
             }
         }
         Text(
-            text = "© Project Vortex 2026",
+            text = "© Project Lumina 2026 · Vortex Client",
             color = Color.White.copy(alpha = 0.5f),
             fontSize = 10.sp,
             modifier = Modifier

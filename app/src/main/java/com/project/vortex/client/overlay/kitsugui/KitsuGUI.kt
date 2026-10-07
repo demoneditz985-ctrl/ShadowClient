@@ -418,7 +418,7 @@ class KitsuGUI : OverlayWindow() {
                         ModernActionButton(
                             iconRes = R.drawable.browser_24,
                             onClick = {
-                                openUrl("https://projectvortex.netlify.app/", context)
+                                openUrl("https://github.com/demoneditz985-ctrl/ShadowClient", context)
                             }
                         )
 

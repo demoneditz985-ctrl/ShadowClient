@@ -1,8 +1,16 @@
 # COPYING
 
-## Project Vortex (Vortex Client)
+## Vortex Client
 
-© Project Vortex 2026
+Vortex Client is a rebranded build of **Lumina Client** by Project Lumina
+(<https://github.com/TheProjectLumina/LuminaClient>), used and modified under the
+terms of the GNU General Public License v3.0 or later. The upstream project is
+licensed under GPL-3.0-or-later with its own copyright notices, which are kept
+intact throughout this repository.
+
+© Project Lumina 2026 — upstream Lumina Client
+
+© Vortex Client contributors 2026 — rebrand, neon-purple theme and Vortex UI changes
 
 This program is free software: you can redistribute it and/or modify it  
 under the terms of the GNU General Public License as published by the Free Software  
@@ -46,9 +54,9 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 ---
 
-### VortexUX
+### VortexUX (upstream: LuminaUX)
 
-© Project Vortex 2026
+© Project Lumina 2026
 
 Licensed under the MIT License. A copy of the license is included below:
 
@@ -89,7 +97,7 @@ This license allows modification, redistribution, and use under specific conditi
 ## Summary
 
 Each component in this project retains its original license.  
-Project Vortex as a whole is distributed under the terms of the **GNU General Public License v3.0 or later**.
+Vortex Client as a whole is distributed under the terms of the **GNU General Public License v3.0 or later**.
 
 Please refer to each component’s LICENSE file for exact terms.
 

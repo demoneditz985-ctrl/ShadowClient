@@ -247,7 +247,7 @@ class OverlayClickGUI : OverlayWindow() {
                             modifier = Modifier
                                 .size(24.dp)
                                 .clickable { 
-                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://projectvortex.netlify.app/")).apply {
+                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/demoneditz985-ctrl/ShadowClient")).apply {
                                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                                     }
                                     context.startActivity(intent)
@@ -260,7 +260,7 @@ class OverlayClickGUI : OverlayWindow() {
                             modifier = Modifier
                                 .size(24.dp)
                                 .clickable { 
-                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/TheProjectVortex/VortexClient")).apply {
+                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/demoneditz985-ctrl/ShadowClient")).apply {
                                         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                                     }
                                     context.startActivity(intent)

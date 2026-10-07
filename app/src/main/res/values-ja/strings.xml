@@ -270,7 +270,7 @@
     <string name="vortex_introduction">Vortexは、Minecraft Bedrock Edition (MCBE)用のPvPチートクライアントで、複数のオペレーティングシステムで動作します。戦闘パフォーマンスとミニゲームサーバー向けの隠密なバイパスに重点を置いて構築されています。</string>
     <string name="vortex_expectation">私たちの目標は、システムのパフォーマンスやセキュリティを損なうことなく、ゲームプレイを向上させる軽量で安定した機能豊富なソリューションを提供することです。</string>
     <string name="vortex_compatibility">Android 9+デバイスおよびMinecraft Pocket Editionの64ビットおよび32ビットバージョンと互換性があり、最新のMinecraftバージョンを使用することをお勧めします。</string>
-    <string name="vortex_copyright">© 2026 Project Vortex — GNU GPLv3に基づくライセンス</string>
+    <string name="vortex_copyright">© 2026 Project Lumina · Vortex Client — GNU GPLv3に基づくライセンス</string>
     <string name="vortex_team">Project Vortexチームによって♥️で作られました</string>
     <string name="connect_with_us">私たちとつながる</string>
 

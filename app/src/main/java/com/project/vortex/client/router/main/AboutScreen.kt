@@ -1,5 +1,5 @@
 /*
- * © Project Vortex 2026 — Licensed under GNU GPLv3
+ * © Project Lumina 2026 — Licensed under GNU GPLv3
  * You are free to use, modify, and redistribute this code under the terms
  * of the GNU General Public License v3. See the LICENSE file for details.
  *
@@ -279,7 +279,7 @@ fun AboutScreen() {
                             icon = painterResource(id = R.drawable.ic_github),
                             label = "GitHub",
                             onClick = {
-                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/TheProjectVortex/VortexClient"))
+                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/demoneditz985-ctrl/ShadowClient"))
                                 context.startActivity(intent)
                             }
                         )
@@ -297,19 +297,11 @@ fun AboutScreen() {
                             icon = Icons.Filled.Public,
                             label = "Website",
                             onClick = {
-                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://projectvortex.netlify.app"))
+                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/demoneditz985-ctrl/ShadowClient"))
                                 context.startActivity(intent)
                             }
                         )
 
-                        SocialMediaIcon(
-                            icon = painterResource(id = R.drawable.ic_youtube),
-                            label = "YouTube",
-                            onClick = {
-                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://youtube.com/@prvortex"))
-                                context.startActivity(intent)
-                            }
-                        )
                     }
                 }
             }

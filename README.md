@@ -1,7 +1,29 @@
 # Vortex Client
 
-![Vortex Client Logo](./images/vortex.png)  
-[![Download count](https://img.shields.io/github/downloads/TheProjectVortex/VortexClient/total.svg)](https://github.com/TheProjectVortex/VortexClient/releases)[![Netlify Status](https://api.netlify.com/api/v1/badges/679c08db-f713-4384-b052-1fd2f90d35f3/deploy-status)](https://app.netlify.com/projects/projectvortex/deploys) [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)[![GitHub issues](https://img.shields.io/github/issues/TheProjectVortex/VortexClient.svg) ](https://github.com/TheProjectVortex/VortexClient/issues)[![GitHub stars](https://img.shields.io/github/stars/TheProjectVortex/VortexClient.svg)](https://github.com/TheProjectVortex/VortexClient/stargazers)[![IntelliJ IDEA](https://img.shields.io/badge/IntelliJIDEA-000000.svg?logo=intellij-idea&logoColor=white)](https://www.jetbrains.com/idea/)[![Firebase](https://img.shields.io/badge/Firebase-039BE5?logo=Firebase&logoColor=white)](https://firebase.google.com/)[![Android](https://img.shields.io/badge/Android-3DDC84?logo=android&logoColor=white)](https://developer.android.com/studio)
+[![Build APK](https://github.com/demoneditz985-ctrl/ShadowClient/actions/workflows/build-apk.yml/badge.svg)](https://github.com/demoneditz985-ctrl/ShadowClient/actions/workflows/build-apk.yml)[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)[![GitHub issues](https://img.shields.io/github/issues/demoneditz985-ctrl/ShadowClient.svg)](https://github.com/demoneditz985-ctrl/ShadowClient/issues)[![Android](https://img.shields.io/badge/Android-3DDC84?logo=android&logoColor=white)](https://developer.android.com/studio)
+
+## Neon Purple Edition
+
+This is a fully rebranded build: every trace of the original name has been replaced with
+**Vortex / Vortex Client**, the launcher icon and in-app logo use the new Vortex mark, and
+the complete UI (Material3 theme, splash screen, KitsuGUI, ClickGUI, Wraith client,
+overlays, minimap, notifications and every accent colour) has been repainted in
+**neon purple** — `#B026FF` primary, `#C77DFF` / `#E455FF` accents on a deep `#0A0611` base.
+
+> Vortex Client is a rebranded fork of [Lumina Client](https://github.com/TheProjectLumina/LuminaClient)
+> by Project Lumina (GPL-3.0-or-later). Upstream copyright notices are preserved — see
+> [COPYING.md](./COPYING.md) and [NOTICE](./NOTICE).
+
+### Get the APK
+
+Builds are produced automatically by GitHub Actions:
+
+1. Open the [**Actions** tab](https://github.com/demoneditz985-ctrl/ShadowClient/actions/workflows/build-apk.yml).
+2. Pick the newest green **Build APK** run.
+3. Download the **vortex-client-apk** artifact (or grab the APK from
+   [**Releases**](https://github.com/demoneditz985-ctrl/ShadowClient/releases)).
+
+---
 
 ## Introduction
 
@@ -21,18 +43,12 @@ Vortex Client offers a set of tools to help you perform better in Minecraft Bedr
 
 ---
 
-## Community Highlights
+## Community
 
-The Project Vortex community is growing fast, and we love seeing all the energy and support from everyone! Our [Discord server](https://discord.gg/78bqDpAHmK) is full of people chatting, sharing ideas, and just hanging out every day.
-
-Whether you're new or a regular, it's a great place to:
-
-- Meet other Vortex players
-- Share your creations
-- Ask questions and get help
-- Stay up to date with what’s new
-
-Come say hello in the [Discord](https://discord.gg/78bqDpAHmK) — we’d love to have you around!
+Questions, bug reports and feature ideas are welcome on the
+[GitHub Issues page](https://github.com/demoneditz985-ctrl/ShadowClient/issues). The upstream Lumina community
+lives in the [Project Lumina Discord](https://discord.gg/78bqDpAHmK), which is still the
+best place for help with the underlying client features.
 
 ---
 
@@ -54,14 +70,14 @@ No additional hardware is required, but enabling developer options on Android ma
 
 Setting up Vortex Client is quick and straightforward. Follow these steps:
 
-1. **Download the APK**: Head to our [Releases page](https://github.com/TheProjectVortex/VortexClient/releases) and download the latest Vortex Client APK.
+1. **Download the APK**: Head to our [Releases page](https://github.com/demoneditz985-ctrl/ShadowClient/releases) and download the latest Vortex Client APK.
 2. **Allow Unknown Sources**: On your Android device, go to **Settings > Security** (or **Apps & Notifications** on newer versions) and enable **Install from Unknown Sources**.
 3. **Install the APK**: Open the downloaded APK file using a file manager, tap to install, and follow the prompts.
 4. **Launch Vortex**: Find Vortex in your app drawer, open it, and log in with your Minecraft account.
 5. **Configure Settings**: Adjust keybinds, enable desired tools, and customize the UI to suit your preferences.
 6. **Test on a Server**: Join a test server to ensure everything works as expected. For best results, start with a non-protected server to familiarize yourself with the features.
 
-If you encounter issues, visit our [Discord](https://discord.gg/78bqDpAHmK) for support or consult the [NOTICE](https://github.com/TheProjectVortex/VortexClient/blob/main/NOTICE) file.
+If you encounter issues, open an [issue](https://github.com/demoneditz985-ctrl/ShadowClient/issues) or consult the [NOTICE](https://github.com/demoneditz985-ctrl/ShadowClient/blob/main/NOTICE) file.
 
 ---
 
@@ -72,7 +88,7 @@ For developers looking to contribute or customize Vortex, here’s how to set up
 1. **Clone the Repository**:
 
     ```bash
-    git clone https://github.com/TheProjectVortex/VortexClient.git
+    git clone https://github.com/demoneditz985-ctrl/ShadowClient.git
     ```
 
    This downloads the full source code to your local machine.
@@ -80,14 +96,14 @@ For developers looking to contribute or customize Vortex, here’s how to set up
 2. **Open in Android Studio**:
 
    - Launch Android Studio and select **Open an existing project**.
-   - Choose the `VortexClient` directory and open it.
+   - Choose the `ShadowClient` directory and open it.
 3. **Replace google-services.json**:
 
    - The repository includes a dummy `google-services.json` file, which must be replaced with your own for the app to build successfully.
    - Create a Firebase project at [Firebase Console](https://console.firebase.google.com/).
    - Add an Android app to your Firebase project, following the prompts to download your `google-services.json` file.
    - Place the downloaded `google-services.json` file in the `app` directory of the VortexClient project, overwriting the dummy file.
-   - Ensure the package name in Firebase matches the one in `build.gradle` (e.g., `com.projectvortex.vortexclient`).
+   - Ensure the package name in Firebase matches the one in `build.gradle` (e.g., `com.project.vortex.client`).
 4. **Sync Gradle**:
 
    - Click **Sync Project with Gradle Files** to fetch dependencies.
@@ -98,7 +114,7 @@ For developers looking to contribute or customize Vortex, here’s how to set up
    - Select **Run > Run 'app'** to build and deploy Vortex.
    - Test changes on a local Minecraft Bedrock server to verify functionality.
 
-Refer to inline comments and the [NOTICE](https://github.com/TheProjectVortex/VortexClient/blob/main/NOTICE) file for guidance. For advanced development tips, join our [Discord](https://discord.gg/78bqDpAHmK) or check our [YouTube](https://youtube.com/@prvortex) for tutorials.
+Refer to inline comments and the [NOTICE](https://github.com/demoneditz985-ctrl/ShadowClient/blob/main/NOTICE) file for guidance. The upstream project is documented at [TheProjectLumina/LuminaClient](https://github.com/TheProjectLumina/LuminaClient).
 
 ---
 
@@ -112,7 +128,7 @@ We welcome contributions to improve Vortex Client. To ensure a high-quality code
 - **Performance**: Optimize additions to maintain low latency, especially for combat and networking modules.
 - **Testing**: Test changes on multiple servers (e.g., CubeCraft, Hive) to ensure compatibility and stability.
 - **Pull Requests**: Submit PRs with a detailed description of changes, including the problem solved or feature added.
-- **Community Standards**: Follow our [Code of Conduct](https://github.com/TheProjectVortex/VortexClient/blob/main/CODE_OF_CONDUCT.md) to maintain a respectful environment.
+- **Community Standards**: Follow our [Code of Conduct](https://github.com/demoneditz985-ctrl/ShadowClient/blob/main/CODE_OF_CONDUCT.md) to maintain a respectful environment.
 
 Before submitting, run a full build and test cycle to minimize errors. We review all contributions promptly and appreciate your efforts to enhance Vortex.
 
@@ -126,7 +142,7 @@ Vortex is designed for personal use and experimentation, but there are rules to 
 
 - Modify Vortex for personal gameplay or to test new features.
 - Create educational content (e.g., YouTube videos, tutorials) showcasing Vortex’s capabilities.
-- Fork the repository for learning or to create derivative projects, provided you comply with the [GNU GPL v3.0](https://github.com/TheProjectVortex/VortexClient/blob/main/LICENSE).
+- Fork the repository for learning or to create derivative projects, provided you comply with the [GNU GPL v3.0](https://github.com/demoneditz985-ctrl/ShadowClient/blob/main/LICENSE).
 
 ### Prohibited Uses
 
@@ -136,7 +152,7 @@ Vortex is designed for personal use and experimentation, but there are rules to 
 - Do not distribute Vortex as closed-source or under a non-GPL license.
 - The authors are not responsible for bans, damages, or issues arising from Vortex’s use.
 
-See the [LICENSE](https://github.com/TheProjectVortex/VortexClient/blob/main/LICENSE) and [NOTICE](https://github.com/TheProjectVortex/VortexClient/blob/main/NOTICE) files for full details.
+See the [LICENSE](https://github.com/demoneditz985-ctrl/ShadowClient/blob/main/LICENSE) and [NOTICE](https://github.com/demoneditz985-ctrl/ShadowClient/blob/main/NOTICE) files for full details.
 
 ---
 
@@ -145,10 +161,9 @@ See the [LICENSE](https://github.com/TheProjectVortex/VortexClient/blob/main/LIC
 Join our community to connect with other Vortex users and developers:
 
 - **Discord**: Our [Discord server](https://discord.gg/78bqDpAHmK) is the best place for real-time support, bug reports, and feature discussions.
-- **YouTube**: Visit our [YouTube channel](https://youtube.com/@prvortex) for tutorials, feature demos, and project updates.
-- **GitHub**: Report issues or suggest enhancements on our [GitHub Issues page](https://github.com/TheProjectVortex/VortexClient/issues).
+- **GitHub**: Report issues or suggest enhancements on our [GitHub Issues page](https://github.com/demoneditz985-ctrl/ShadowClient/issues).
 
-We strive to maintain a welcoming and inclusive community. Please review our [Code of Conduct](https://github.com/TheProjectVortex/VortexClient/blob/main/CODE_OF_CONDUCT.md) before participating.
+We strive to maintain a welcoming and inclusive community. Please review our [Code of Conduct](https://github.com/demoneditz985-ctrl/ShadowClient/blob/main/CODE_OF_CONDUCT.md) before participating.
 
 ---
 
@@ -156,7 +171,7 @@ We strive to maintain a welcoming and inclusive community. Please review our [Co
 
 For detailed technical documentation, architecture diagrams, and in-depth guides:
 
-- **DeepWiki**: Explore our comprehensive [technical documentation](https://deepwiki.com/TheProjectVortex/VortexClient) covering system architecture, relay system, packet processing, game modules, chunk data management, and more.
+- **DeepWiki**: Explore our comprehensive [technical documentation](https://deepwiki.com/TheProjectLumina/LuminaClient) covering system architecture, relay system, packet processing, game modules, chunk data management, and more.
 - **Project Website**: Visit [projectvortex.online](https://projectvortex.online/#/docs/overview) for user guides and feature documentation.
 
 The documentation is automatically generated and kept up-to-date with the codebase, providing detailed insights into:
@@ -203,10 +218,10 @@ Additional dependencies include:
 - **[Amplitude Analytics](https://www.amplitude.com/)**: Analytics SDK for tracking user behavior and app performance.
 - **[Compose Colorful Sliders](https://github.com/SmartToolFactory/Compose-Colorful-Sliders)**: Custom UI components for interactive sliders in Jetpack Compose.
 - **[Coil Compose](https://coil-kt.github.io/coil/compose/)**: Image loading library for efficient image handling in Jetpack Compose.
-- **[AnimatedUX](https://github.com/TheProjectVortex/AnimatedUX)**: Custom animation library for dynamic UI transitions (project dependency).
-- **[Pixie](https://github.com/TheProjectVortex/Vortex-v4-dev/tree/main/Pixie)**: ImGui setup for Android using native surface rendering for optimized graphics (project dependency).
-- **[Vortex](https://github.com/TheProjectVortex/Vortex-v4-dev/tree/main/Vortex)**: Custom utility library for Vortex’s core functionality (project dependency).
-- **[SSC](https://github.com/TheProjectVortex/Vortex-v4-dev/tree/main/SSC)**: Custom Utility Dependency (project dependency).
+- **[AnimatedUX](https://github.com/TheProjectLumina/LuminaClient)**: Custom animation library for dynamic UI transitions (project dependency).
+- **[Pixie](https://github.com/TheProjectLumina/LuminaClient/tree/main/Pixie)**: ImGui setup for Android using native surface rendering for optimized graphics (project dependency).
+- **[Vortex](https://github.com/TheProjectLumina/LuminaClient/tree/main/Vortex)**: Custom utility library for Vortex’s core functionality (project dependency).
+- **[SSC](https://github.com/TheProjectLumina/LuminaClient/tree/main/SSC)**: Custom Utility Dependency (project dependency).
 - **[Android Native Surface](https://github.com/SsageParuders/Android_Native_Surface)**: Imgui And Native Rendering.
 - **[Sign Verification](https://github.com/aizuzi/SignatureVerificationDemo)**: Signature Verification And integrity Check
 - **[Kotlinx Serialization JSON](https://github.com/Kotlin/kotlinx.serialization)**: JSON serialization for Kotlin-based data handling.
@@ -242,10 +257,10 @@ Vortex Client Version 4 is licensed under the [GNU General Public License v3.0](
 - Derivative works must remain open-source and cannot impose additional restrictions.
 - The software is provided "as is" without warranties, and the authors are not liable for any damages or misuse.
 
-For complete details, see the [LICENSE](https://github.com/TheProjectVortex/VortexClient/blob/main/LICENSE) and [NOTICE](https://github.com/TheProjectVortex/VortexClient/blob/main/NOTICE) files.
+For complete details, see the [LICENSE](https://github.com/demoneditz985-ctrl/ShadowClient/blob/main/LICENSE) and [NOTICE](https://github.com/demoneditz985-ctrl/ShadowClient/blob/main/NOTICE) files.
 
 ---
 
 ## Final Thoughts
 
-Vortex Client is a form of love from the Project Vortex team, built for Minecraft Bedrock community. We’re excited to see how you use, customize, and contribute to Vortex. Join us on [Discord](https://discord.gg/78bqDpAHmK) or [YouTube](https://youtube.com/@prvortex) to stay connected, share your creations, and help shape the future of Vortex!
+Vortex Client is a form of love from the Vortex Client project, built for Minecraft Bedrock community. We’re excited to see how you use, customize, and contribute to Vortex. Ask questions and share your builds on the upstream [Discord](https://discord.gg/78bqDpAHmK), or open an [issue](https://github.com/demoneditz985-ctrl/ShadowClient/issues) on this repo for Vortex-specific problems!

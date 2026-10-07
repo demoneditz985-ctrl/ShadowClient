@@ -270,7 +270,7 @@
     <string name="vortex_introduction">Vortex 是一个适用于 Minecraft Bedrock Edition (MCBE) 的 PvP 作弊客户端，跨多个操作系统工作。我们专注于战斗性能和迷你游戏服务器的隐形绕过。</string>
     <string name="vortex_expectation">我们的目标是提供一个轻量、稳定且功能丰富的解决方案，在不影响系统性能或安全性的情况下增强游戏体验。</string>
     <string name="vortex_compatibility">兼容 Android 9+ 设备以及 Minecraft Pocket Edition 的 64 位和 32 位版本，建议使用最新版本的 Minecraft 以获得最佳体验。</string>
-    <string name="vortex_copyright">© 2026 Project Vortex — 根据 GNU GPLv3 许可</string>
+    <string name="vortex_copyright">© 2026 Project Lumina · Vortex Client — 根据 GNU GPLv3 许可</string>
     <string name="vortex_team">由 Project Vortex 团队倾情打造 ♥️</string>
     <string name="connect_with_us">与我们联系</string>
 

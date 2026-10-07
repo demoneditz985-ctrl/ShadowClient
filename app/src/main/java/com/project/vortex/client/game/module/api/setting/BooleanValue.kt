@@ -1,5 +1,5 @@
 /*
- * © Project Vortex 2026 — GPLv3 Licensed
+ * © Project Lumina 2026 — GPLv3 Licensed
  * You may use, modify, and share this code under the GPL.
  *
  * Just know: changing names and colors doesn't make you a developer.

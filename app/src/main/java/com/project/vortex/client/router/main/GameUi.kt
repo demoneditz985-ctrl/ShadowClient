@@ -1,5 +1,5 @@
 /*
- * © Project Vortex 2026 — Licensed under GNU GPLv3
+ * © Project Lumina 2026 — Licensed under GNU GPLv3
  * You are free to use, modify, and redistribute this code under the terms
  * of the GNU General Public License v3. See the LICENSE file for details.
  *
@@ -34,7 +34,7 @@
  * Full text: https://www.gnu.org/licenses/gpl-3.0.html
  */
 /*
- * © Project Vortex 2026 — Licensed under GNU GPLv3
+ * © Project Lumina 2026 — Licensed under GNU GPLv3
  * You are free to use, modify, and redistribute this code under the terms
  * of the GNU General Public License v3. See the LICENSE file for details.
  *
@@ -420,7 +420,7 @@ fun GameUI() {
                     modifier = Modifier.align(Alignment.BottomStart)
                 ) {
                     Text(
-                        text = "© Project Vortex 2026 | v${getAppVersion(context)}",
+                        text = "© Project Lumina 2026 · Vortex Client | v${getAppVersion(context)}",
                         color = Color.White.copy(alpha = 0.5f),
                         fontSize = 9.sp
                     )

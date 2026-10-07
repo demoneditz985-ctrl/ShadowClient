@@ -9,7 +9,7 @@ import org.cloudburstmc.protocol.bedrock.packet.PlayerAuthInputPacket
 import org.cloudburstmc.protocol.bedrock.packet.SetEntityMotionPacket
 
 /*
- * © Project Vortex 2026 — Licensed under GNU GPLv3
+ * © Project Lumina 2026 — Licensed under GNU GPLv3
  * You are free to use, modify, and redistribute this code under the terms
  * of the GNU General Public License v3. See the LICENSE file for details.
  *

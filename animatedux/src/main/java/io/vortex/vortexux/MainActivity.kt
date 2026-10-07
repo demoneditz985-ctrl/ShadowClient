@@ -1,5 +1,5 @@
 /*
- * © Project Vortex 2026 — Licensed under GNU GPLv3
+ * © Project Lumina 2026 — Licensed under GNU GPLv3
  * You are free to use, modify, and redistribute this code under the terms
  * of the GNU General Public License v3. See the LICENSE file for details.
  *
@@ -238,7 +238,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = "© Project Vortex 2026 | v4.0.3",
+                        text = "© Project Lumina 2026 · Vortex Client | v4.0.3",
                         color = Color.White.copy(alpha = 0.5f),
                         fontSize = 9.sp,
                         modifier = Modifier.align(Alignment.BottomStart)
