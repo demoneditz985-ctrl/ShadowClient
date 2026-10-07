@@ -169,7 +169,7 @@ private fun LoadingState() {
         modifier = Modifier
             .fillMaxSize()
             .clip(RoundedCornerShape(10.dp))
-            .background(Color(0xFF1E1E1E).copy(alpha = 0.85f))
+            .background(Color(0xFF1B1030).copy(alpha = 0.85f))
             .border(
                 1.dp,
                 TheNotBackgroundColorForOverlayUi.copy(alpha = 0.3f),
@@ -201,7 +201,7 @@ private fun EmptyState() {
         modifier = Modifier
             .fillMaxSize()
             .clip(RoundedCornerShape(10.dp))
-            .background(Color(0xFF1E1E1E).copy(alpha = 0.85f))
+            .background(Color(0xFF1B1030).copy(alpha = 0.85f))
             .border(
                 1.dp,
                 TheNotBackgroundColorForOverlayUi.copy(alpha = 0.3f),
@@ -259,9 +259,9 @@ fun ModernPlayerCard(player: GameDataManager.PlayerInfo) {
 
     val animatedBackgroundColor by animateColorAsState(
         targetValue = if (isPressed)
-            Color(0xFF2A2A2A).copy(alpha = 0.95f)
+            Color(0xFF221238).copy(alpha = 0.95f)
         else
-            Color(0xFF1E1E1E).copy(alpha = 0.85f),
+            Color(0xFF1B1030).copy(alpha = 0.85f),
         animationSpec = tween(200),
         label = "playerCardBackground"
     )
@@ -356,7 +356,7 @@ fun ModernPlayerCard(player: GameDataManager.PlayerInfo) {
                     if (player.buildPlatform != 0) {
                         PlayerDetailChip(
                             text = getPlatformName(player.buildPlatform),
-                            color = Color(0xFF4A90E2).copy(alpha = 0.6f)
+                            color = Color(0xFF9D4EDD).copy(alpha = 0.6f)
                         )
                     }
                 }
@@ -398,7 +398,7 @@ fun ModernPlayerRoleBadges(player: GameDataManager.PlayerInfo) {
         if (player.isTeacher) {
             ModernRoleBadge(
                 text = "TEACHER",
-                color = Color(0xFF3742FA),
+                color = Color(0xFF8B5CF6),
                 icon = Icons.Default.School
             )
         }
@@ -462,7 +462,7 @@ fun ModernRoleBadge(
 private fun getPlayerColor(player: GameDataManager.PlayerInfo): Color {
     return when {
         player.isHost -> Color(0xFFFF4757)
-        player.isTeacher -> Color(0xFF3742FA)
+        player.isTeacher -> Color(0xFF8B5CF6)
         player.isSubClient -> Color(0xFF8E44AD)
         else -> Color(0xFF2ED573)
     }

@@ -45,7 +45,7 @@ data class LineData(val x: String, val y: Float)
 fun MiniLineGraph(
     modifier: Modifier = Modifier,
     data: List<LineData>,
-    lineColor: Color = Color(0xFF4B7BFF)
+    lineColor: Color = Color(0xFFB026FF)
 ) {
     val transition = rememberInfiniteTransition(label = "graphTransition")
     val shimmerOffset by transition.animateFloat(
@@ -70,9 +70,9 @@ fun MiniLineGraph(
         drawRect(
             brush = Brush.linearGradient(
                 colors = listOf(
-                    Color(0xFF4B7BFF).copy(alpha = 0f),
-                    Color(0xFF4B7BFF).copy(alpha = 0.1f),
-                    Color(0xFF4B7BFF).copy(alpha = 0f)
+                    Color(0xFFB026FF).copy(alpha = 0f),
+                    Color(0xFFB026FF).copy(alpha = 0.1f),
+                    Color(0xFFB026FF).copy(alpha = 0f)
                 ),
                 start = Offset(shimmerOffset, 0f),
                 end = Offset(shimmerOffset + 100f, size.height)

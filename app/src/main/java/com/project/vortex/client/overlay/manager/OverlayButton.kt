@@ -20,11 +20,11 @@ import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.foundation.Image
 import androidx.compose.ui.unit.dp
 import com.project.vortex.client.R
 import com.project.vortex.client.overlay.grace.GraceMenuUi
@@ -77,8 +77,6 @@ class OverlayButton : OverlayWindow() {
             windowManager.updateViewLayout(composeView, _layoutParams)
         }
 
-        val logoVector: ImageVector = ImageVector.vectorResource(id = R.drawable.logo)
-
 
         val prefs = context.getSharedPreferences("SettingsPrefs", Context.MODE_PRIVATE)
         var selectedGUIName by remember { mutableStateOf(prefs.getString("selectedGUI", "KitsuGUI") ?: "KitsuGUI") }
@@ -121,11 +119,12 @@ class OverlayButton : OverlayWindow() {
         ) {
             FogAnimation()
 
-            Icon(
-                imageVector = logoVector,
-                contentDescription = null,
-                tint = Color.Unspecified,
-                modifier = Modifier.align(Alignment.Center)
+            Image(
+                painter = painterResource(R.drawable.vortex_logo),
+                contentDescription = "Vortex Logo",
+                modifier = Modifier
+                    .fillMaxSize()
+                    .align(Alignment.Center)
             )
         }
     }
@@ -215,7 +214,7 @@ private fun FogAnimation() {
             val paint = android.graphics.Paint().apply {
                 isAntiAlias = true
                 maskFilter = BlurMaskFilter(radius * layer.blur, BlurMaskFilter.Blur.NORMAL)
-                color = Color.White.copy(alpha = alpha).toArgb()
+                color = Color(0xFFB026FF).copy(alpha = alpha).toArgb()
             }
 
             listOf(-1f, 1f).forEach { dir ->

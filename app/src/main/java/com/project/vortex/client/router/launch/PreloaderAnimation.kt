@@ -22,10 +22,11 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.res.painterResource
 import com.project.vortex.client.R
 
-private val AccentColor = Color.Black 
-private val SecondaryAccent = Color.Gray 
-private val BackgroundColor = Color.White 
-private val TextColor = Color.Black 
+// Vortex neon-purple splash palette
+private val AccentColor = Color(0xFFB026FF)
+private val SecondaryAccent = Color(0xFFC77DFF)
+private val BackgroundColor = Color(0xFF0A0611)
+private val TextColor = Color(0xFFE9D6FF)
 
 @Composable
 fun PreloaderAnimation() {
@@ -70,21 +71,51 @@ fun LogoAnimation() {
         label = "rotation"
     )
 
-    Box(
-        modifier = Modifier
-            .size(80.dp)
-            .clip(CircleShape)
-            .graphicsLayer {
-                scaleX = scale
-                scaleY = scale
-                //rotationZ = rotation
-            },
-        contentAlignment = Alignment.Center
-    ) {
-        Image(
-            painter = painterResource(R.drawable.logo),
-            contentDescription = "Logo",
-            modifier = Modifier.size(90.dp)
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Box(
+            modifier = Modifier
+                .size(150.dp)
+                .clip(CircleShape)
+                .graphicsLayer {
+                    scaleX = scale
+                    scaleY = scale
+                },
+            contentAlignment = Alignment.Center
+        ) {
+            // neon purple halo behind the mark
+            Box(
+                modifier = Modifier
+                    .size(140.dp)
+                    .clip(CircleShape)
+                    .background(
+                        Brush.radialGradient(
+                            colors = listOf(
+                                AccentColor.copy(alpha = 0.35f),
+                                Color.Transparent
+                            )
+                        )
+                    )
+            )
+            Image(
+                painter = painterResource(R.drawable.vortex_logo),
+                contentDescription = "Vortex Logo",
+                modifier = Modifier.size(128.dp)
+            )
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = "VORTEX",
+            color = AccentColor,
+            fontSize = 30.sp,
+            fontWeight = FontWeight.Bold,
+            letterSpacing = 10.sp
+        )
+        Text(
+            text = "CLIENT",
+            color = SecondaryAccent.copy(alpha = 0.85f),
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Medium,
+            letterSpacing = 8.sp
         )
     }
 }

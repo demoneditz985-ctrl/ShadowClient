@@ -99,9 +99,9 @@ class WClientUI : OverlayWindow() {
                     .background(
                         Brush.verticalGradient(
                             colors = listOf(
-                                Color(0xFF0A0A0A),
-                                Color(0xFF151515),
-                                Color(0xFF0A0A0A)
+                                Color(0xFF0A0611),
+                                Color(0xFF150B24),
+                                Color(0xFF0A0611)
                             )
                         ),
                         RoundedCornerShape(20.dp)
@@ -316,8 +316,8 @@ class WClientUI : OverlayWindow() {
                         if (isSelected) {
                             Brush.radialGradient(
                                 colors = listOf(
-                                    Color(0xFF00FF88),
-                                    Color(0xFF0088FF),
+                                    Color(0xFFC77DFF),
+                                    Color(0xFF9D4EDD),
                                     Color(0xFF8800FF)
                                 )
                             )

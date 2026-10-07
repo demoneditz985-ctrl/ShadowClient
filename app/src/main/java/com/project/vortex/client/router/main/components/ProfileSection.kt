@@ -54,7 +54,7 @@ import java.util.concurrent.TimeUnit
 private const val DEFAULT_BANNER = "https://discord.com/assets/97ac61a0b98fd6f01b4de370c9ccdb56.png"
 private const val NITRO_ICON = "https://cdn.discordapp.com/badge-icons/2ba85e8026a8614b640c2837bcdfe21b.png"
 private const val VORTEX_ICON = "https://raw.githubusercontent.com/TheProjectVortex/VortexClient/main/images/vortex2.jpg"
-private val DISCORD_BLURPLE = Color(0xFF5865F2)
+private val DISCORD_BLURPLE = Color(0xFFB026FF)
 
 private val profileBorderColors = listOf(Color(0xFFa3a1ed), Color(0xFFA77798))
 private val profileBackgroundColors = listOf(Color(0xFFC2C0FA), Color(0xFFFADAF0))

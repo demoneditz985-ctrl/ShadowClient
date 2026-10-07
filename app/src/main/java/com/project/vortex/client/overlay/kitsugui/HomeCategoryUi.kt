@@ -297,8 +297,8 @@ fun HomeCategoryUi() {
                         width = 1.dp,
                         brush = Brush.linearGradient(
                             colors = listOf(
-                                if (isPressed2) Color(0xFF10B981) else Color(0xFF374151),
-                                if (isPressed2) Color(0xFF06B6D4) else Color(0xFF4B5563)
+                                if (isPressed2) Color(0xFFB026FF) else Color(0xFF2A1842),
+                                if (isPressed2) Color(0xFF9D4EDD) else Color(0xFF3B2559)
                             )
                         ),
                         shape = RoundedCornerShape(12.dp)
@@ -308,7 +308,7 @@ fun HomeCategoryUi() {
                         indication = null
                     ) { /* Handle network status click */ },
                 colors = CardDefaults.cardColors(
-                    containerColor = if (isPressed2) Color(0xFF1F1F23) else Color(0xFF18181B)
+                    containerColor = if (isPressed2) Color(0xFF1B1030) else Color(0xFF150B24)
                 ),
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = if (isPressed2) 8.dp else 6.dp
@@ -367,7 +367,7 @@ fun HomeCategoryUi() {
                             )
                             Text(
                                 text = if (hasData) "Game data available" else "No game data",
-                                color = Color(0xFFA1A1AA),
+                                color = Color(0xFFB9A5D6),
                                 fontSize = 8.sp,
                                 textAlign = TextAlign.Start
                             )
@@ -387,7 +387,7 @@ fun HomeCategoryUi() {
             )
 
             val animatedBorderColor by animateColorAsState(
-                targetValue = if (isPressed1) KitsuPrimary else Color(0xFF374151),
+                targetValue = if (isPressed1) KitsuPrimary else Color(0xFF2A1842),
                 animationSpec = tween(200),
                 label = "borderColor1"
             )
@@ -413,7 +413,7 @@ fun HomeCategoryUi() {
                         indication = null
                     ) { WorldStatsOverlay.showOverlay()},
                 colors = CardDefaults.cardColors(
-                    containerColor = if (isPressed1) Color(0xFF1F1F23) else Color(0xFF18181B)
+                    containerColor = if (isPressed1) Color(0xFF1B1030) else Color(0xFF150B24)
                 ),
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = if (isPressed1) 8.dp else 6.dp
@@ -425,7 +425,7 @@ fun HomeCategoryUi() {
                         .background(
                             brush = Brush.verticalGradient(
                                 colors = listOf(
-                                    Color(0xFF2A2A2E).copy(alpha = 0.2f),
+                                    Color(0xFF221238).copy(alpha = 0.2f),
                                     Color.Transparent
                                 )
                             )
@@ -462,7 +462,7 @@ fun HomeCategoryUi() {
                             Column {
                                 Text(
                                     text = "Game Version",
-                                    color = Color(0xFFA1A1AA),
+                                    color = Color(0xFFB9A5D6),
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight.Medium
                                 )
@@ -494,12 +494,12 @@ fun HomeCategoryUi() {
                                 Icon(
                                     painter = painterResource(id = ir.alirezaivaz.tablericons.R.drawable.ic_device_gamepad_2),
                                     contentDescription = "Game Mode",
-                                    tint = Color(0xFF10B981),
+                                    tint = Color(0xFFB026FF),
                                     modifier = Modifier.size(15.dp)
                                 )
                                 Text(
                                     text = gameMode ?: "Unknown Mode",
-                                    color = Color(0xFFE5E7EB),
+                                    color = Color(0xFFE9DCFF),
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight.Medium,
                                     maxLines = 1,
@@ -519,7 +519,7 @@ fun HomeCategoryUi() {
                                 )
                                 Text(
                                     text = "ID: ${uniqueEntityId ?: "N/A"}",
-                                    color = Color(0xFFE5E7EB),
+                                    color = Color(0xFFE9DCFF),
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight.Medium,
                                     maxLines = 1,
@@ -544,7 +544,7 @@ fun HomeCategoryUi() {
                                 )
                                 Text(
                                     text = if (defaultPlayerPermission != null && defaultPlayerPermission != PlayerPermission.VISITOR) "Perms: Enabled" else "Perms: Disabled",
-                                    color = Color(0xFFE5E7EB),
+                                    color = Color(0xFFE9DCFF),
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight.Medium,
                                     maxLines = 1,
@@ -559,12 +559,12 @@ fun HomeCategoryUi() {
                                 Icon(
                                     painter = painterResource(id = ir.alirezaivaz.tablericons.R.drawable.ic_command),
                                     contentDescription = "Command",
-                                    tint = Color(0xFF06B6D4),
+                                    tint = Color(0xFF9D4EDD),
                                     modifier = Modifier.size(15.dp)
                                 )
                                 Text(
                                     text = "Commands: ${commandsEnabled ?: "N/A"}",
-                                    color = Color(0xFFE5E7EB),
+                                    color = Color(0xFFE9DCFF),
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight.Medium,
                                     maxLines = 1,
@@ -602,8 +602,8 @@ fun HomeCategoryUi() {
                         width = 1.dp,
                         brush = Brush.linearGradient(
                             colors = listOf(
-                                if (isPressed3) KitsuPrimary else Color(0xFF374151),
-                                if (isPressed3) Color(0xFF06B6D4) else Color(0xFF4B5563)
+                                if (isPressed3) KitsuPrimary else Color(0xFF2A1842),
+                                if (isPressed3) Color(0xFF9D4EDD) else Color(0xFF3B2559)
                             )
                         ),
                         shape = RoundedCornerShape(12.dp)
@@ -613,7 +613,7 @@ fun HomeCategoryUi() {
                         indication = null
                     ) { /* Handle player list click */ },
                 colors = CardDefaults.cardColors(
-                    containerColor = if (isPressed3) Color(0xFF1F1F23) else Color(0xFF18181B)
+                    containerColor = if (isPressed3) Color(0xFF1B1030) else Color(0xFF150B24)
                 ),
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = if (isPressed3) 8.dp else 6.dp
@@ -647,9 +647,9 @@ fun HomeCategoryUi() {
                         width = 1.dp,
                         brush = Brush.horizontalGradient(
                             colors = if (isPressed4)
-                                listOf(Color(0xFF8B5CF6).copy(alpha = 0.6f), Color(0xFF06B6D4).copy(alpha = 0.6f))
+                                listOf(Color(0xFF8B5CF6).copy(alpha = 0.6f), Color(0xFF9D4EDD).copy(alpha = 0.6f))
                             else
-                                listOf(Color(0xFF374151), Color(0xFF4B5563))
+                                listOf(Color(0xFF2A1842), Color(0xFF3B2559))
                         ),
                         shape = RoundedCornerShape(12.dp)
                     )
@@ -658,7 +658,7 @@ fun HomeCategoryUi() {
                         indication = null
                     ) { /* Handle level info click */ },
                 colors = CardDefaults.cardColors(
-                    containerColor = if (isPressed4) Color(0xFF1F1F23) else Color(0xFF18181B)
+                    containerColor = if (isPressed4) Color(0xFF1B1030) else Color(0xFF150B24)
                 ),
                 elevation = CardDefaults.cardElevation(
                     defaultElevation = if (isPressed4) 8.dp else 6.dp
@@ -695,7 +695,7 @@ fun HomeCategoryUi() {
                     ) {
                         Text(
                             text = "Current Level",
-                            color = Color(0xFFA1A1AA),
+                            color = Color(0xFFB9A5D6),
                             fontSize = 9.sp,
                             fontWeight = FontWeight.Medium
                         )

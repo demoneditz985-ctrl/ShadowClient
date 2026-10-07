@@ -247,7 +247,7 @@ private fun CompactNotificationContent(
             modifier = Modifier
                 .fillMaxSize()
                 .clip(RoundedCornerShape(12.dp))
-                .background(Color(0xFF1A1A1A).copy(alpha = 0.95f))
+                .background(Color(0xFF1B1030).copy(alpha = 0.95f))
         )
 
         
@@ -363,7 +363,7 @@ fun CompactNotificationPreview() {
             notification = sampleNotification.copy(moduleName = "Speed"),
             progressPercent = 0.7f,
             themeColor = Color(0xFF10B981),
-            gradientEndColor = Color(0xFF3B82F6)
+            gradientEndColor = Color(0xFFB026FF)
         )
 
         CompactNotificationContent(

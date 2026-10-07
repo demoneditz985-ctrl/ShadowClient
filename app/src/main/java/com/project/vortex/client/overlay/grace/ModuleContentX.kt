@@ -94,7 +94,7 @@ internal fun ChoiceValueContent(value: ListValue) {
         Text(
             value.name,
             style = MaterialTheme.typography.bodyMedium,
-            color = Color(0xFFCECECE)
+            color = Color(0xFFD9C2FF)
         )
 
         LazyRow(
@@ -112,9 +112,9 @@ internal fun ChoiceValueContent(value: ListValue) {
                     label = { Text(text = item.name) },
                     modifier = Modifier.height(30.dp),
                     colors = FilterChipDefaults.filterChipColors(
-                        containerColor = Color(0xFFCECECE),
+                        containerColor = Color(0xFFD9C2FF),
                         selectedContainerColor = Color(0xFF000000),
-                        selectedLabelColor = Color(0xFFCECECE)
+                        selectedLabelColor = Color(0xFFD9C2FF)
                     )
                 )
             }
@@ -144,7 +144,7 @@ fun CustomSlider(
             inactiveTrackColor = SliderBrushColor(color = Color.Transparent),
             activeTrackColor = SliderBrushColor(
                 brush = Brush.horizontalGradient(
-                    colors = listOf(Color(0xFFF85FB6), Color(0xFF8EFAFA), Color(0xFF439CFB))
+                    colors = listOf(Color(0xFFE455FF), Color(0xFFD9B3FF), Color(0xFFB026FF))
                 )
             )
         ),
@@ -164,13 +164,13 @@ internal fun FloatValueContent(value: FloatValue) {
             Text(
                 value.name,
                 style = MaterialTheme.typography.bodyMedium,
-                color = Color(0xFFCECECE)
+                color = Color(0xFFD9C2FF)
             )
             Spacer(Modifier.weight(1f))
             Text(
                 "%.1f".format(value.value),
                 style = MaterialTheme.typography.bodyMedium,
-                color = Color(0xFFCECECE)
+                color = Color(0xFFD9C2FF)
             )
         }
 
@@ -195,13 +195,13 @@ internal fun IntValueContent(value: IntValue) {
             Text(
                 value.name,
                 style = MaterialTheme.typography.bodyMedium,
-                color = Color(0xFFCECECE)
+                color = Color(0xFFD9C2FF)
             )
             Spacer(Modifier.weight(1f))
             Text(
                 value.value.toString(),
                 style = MaterialTheme.typography.bodyMedium,
-                color = Color(0xFFCECECE)
+                color = Color(0xFFD9C2FF)
             )
         }
         CustomSlider(
@@ -230,7 +230,7 @@ internal fun BoolValueContent(value: BoolValue) {
         Text(
             value.name,
             style = MaterialTheme.typography.bodyMedium,
-            color = Color(0xFFCECECE)
+            color = Color(0xFFD9C2FF)
         )
         Spacer(Modifier.weight(1f))
         Checkbox(
@@ -239,9 +239,9 @@ internal fun BoolValueContent(value: BoolValue) {
             modifier = Modifier
                 .padding(0.dp),
             colors = CheckboxDefaults.colors(
-                uncheckedColor = Color(0xFFCECECE),
-                checkedColor = Color(0xFFCECECE),
-                checkmarkColor = Color(0xFFCECECE)
+                uncheckedColor = Color(0xFFD9C2FF),
+                checkedColor = Color(0xFFD9C2FF),
+                checkmarkColor = Color(0xFFD9C2FF)
             )
         )
     }
@@ -269,7 +269,7 @@ internal fun ShortcutContent(element: Element) {
         Text(
             stringResource(R.string.shortcut),
             style = MaterialTheme.typography.bodyMedium,
-            color = Color(0xFFCECECE)
+            color = Color(0xFFD9C2FF)
         )
         Spacer(Modifier.weight(1f))
         Checkbox(
@@ -278,9 +278,9 @@ internal fun ShortcutContent(element: Element) {
             modifier = Modifier
                 .padding(0.dp),
             colors = CheckboxDefaults.colors(
-                uncheckedColor = Color(0xFFCECECE),
-                checkedColor = Color(0xFFCECECE),
-                checkmarkColor = Color(0xFFCECECE)
+                uncheckedColor = Color(0xFFD9C2FF),
+                checkedColor = Color(0xFFD9C2FF),
+                checkmarkColor = Color(0xFFD9C2FF)
             )
         )
     }

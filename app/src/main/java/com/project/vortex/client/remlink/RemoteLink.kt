@@ -512,7 +512,7 @@ fun LinkScreen(
                         .weight(1f)
                         .padding(top = 8.dp)
                         .clip(RoundedCornerShape(8.dp))
-                        .background(Color(0xFF1E1E1E))
+                        .background(Color(0xFF1B1030))
                         .padding(8.dp)
                 ) {
                     LazyColumn(
@@ -731,7 +731,7 @@ fun AnimatedTerminalLogEntry(log: LogEntry, isNewEntry: Boolean = false) {
     )
 
     val logColor = when (log.source) {
-        "System" -> Color(0xFF64B5F6)
+        "System" -> Color(0xFFC77DFF)
         "Error" -> Color(0xFFE57373)
         "Warning" -> Color(0xFFFFD54F)
         else -> Color(0xFF81C784)

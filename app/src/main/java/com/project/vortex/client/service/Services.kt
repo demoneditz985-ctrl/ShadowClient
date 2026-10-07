@@ -266,7 +266,7 @@ class Services : Service() {
     private fun createNotification(text: String) = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
         .setContentTitle("Vortex Capture")
         .setContentText(text)
-        .setSmallIcon(R.drawable.img)
+        .setSmallIcon(R.drawable.ic_notification)
         .setPriority(NotificationCompat.PRIORITY_LOW)
         .addAction(
             android.R.drawable.ic_menu_close_clear_cancel,

@@ -98,7 +98,7 @@ private fun ModuleCard(
     onOpenSettings: ((Element) -> Unit)? = null
 ) {
     var isExpanded by remember { mutableStateOf(false) }
-    val deepBlue = Color(0xFF1E90FF) 
+    val deepBlue = Color(0xFFB026FF) 
 
     Card(
         modifier = Modifier
@@ -111,7 +111,7 @@ private fun ModuleCard(
             ),
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFF2A2A2A) 
+            containerColor = Color(0xFF221238) 
         )
     ) {
         Box(
@@ -281,7 +281,7 @@ private fun ModuleShortcutContent(element: Element) {
                 checkedThumbColor = Color.White,
                 uncheckedThumbColor = Color.Gray,
                 checkedTrackColor = Color(0xFF8B5CF6),
-                uncheckedTrackColor = Color(0xFF4A4A4A),
+                uncheckedTrackColor = Color(0xFF3B2559),
                 checkedBorderColor = Color.Transparent,
                 uncheckedBorderColor = Color.Transparent
             ),
@@ -336,14 +336,14 @@ private fun ChoiceValueContent(value: ListValue) {
                     ),
                     colors = FilterChipDefaults.filterChipColors(
                         containerColor = if (isSelected)
-                            Color(0xFFFFF8F8)
+                            Color(0xFFF6EFFF)
                         else
-                            Color(0xFF3A3A3A),
+                            Color(0xFF3B2559),
                         labelColor = if (isSelected)
                             Color.Black
                         else
                             Color.White,
-                        selectedContainerColor = Color(0xFF232323),
+                        selectedContainerColor = Color(0xFF1B1030),
                         selectedLabelColor = Color.White
                     )
                 )
@@ -387,7 +387,7 @@ private fun FloatValueContent(value: FloatValue) {
         val colors = SliderDefaults.colors(
             thumbColor = Color(0xFFFFFFFF),
             activeTrackColor = Color(0xFFFFFFFF),
-            inactiveTrackColor = Color(0xFF4A4A4A),
+            inactiveTrackColor = Color(0xFF3B2559),
         )
 
         val interactionSource = remember { MutableInteractionSource() }
@@ -477,7 +477,7 @@ private fun IntValueContent(value: IntValue) {
         val colors = SliderDefaults.colors(
             thumbColor = Color(0xFFFFFFFF),
             activeTrackColor = Color(0xFFFFFFFF),
-            inactiveTrackColor = Color(0xFF4A4A4A),
+            inactiveTrackColor = Color(0xFF3B2559),
         )
 
         val interactionSource = remember { MutableInteractionSource() }
@@ -562,8 +562,8 @@ private fun BoolValueContent(value: BoolValue) {
             colors = SwitchDefaults.colors(
                 checkedThumbColor = Color.White,
                 uncheckedThumbColor = Color.Gray,
-                checkedTrackColor = Color(0xFF9C9C9C),
-                uncheckedTrackColor = Color(0xFF4A4A4A),
+                checkedTrackColor = Color(0xFFB9A5D6),
+                uncheckedTrackColor = Color(0xFF3B2559),
                 checkedBorderColor = Color.Transparent,
                 uncheckedBorderColor = Color.Transparent
             )
@@ -620,7 +620,7 @@ private fun ShortcutContent(element: Element) {
                 checkedThumbColor = Color.White,
                 uncheckedThumbColor = Color.Gray,
                 checkedTrackColor = Color(0xFFFFFFFF),
-                uncheckedTrackColor = Color(0xFF4A4A4A),
+                uncheckedTrackColor = Color(0xFF3B2559),
                 checkedBorderColor = Color.Transparent,
                 uncheckedBorderColor = Color.Transparent
             )

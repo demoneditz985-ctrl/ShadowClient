@@ -254,7 +254,7 @@ fun WorldStats() {
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface.copy(alpha = 0.95f)
         ),
-        border = BorderStroke(1.dp, Color(0xFF2A2A2A))
+        border = BorderStroke(1.dp, Color(0xFF221238))
     ) {
         Column(
             modifier = Modifier
@@ -426,7 +426,7 @@ fun WorldStats() {
                             pair.forEach { (name, value, iconRes) ->
                                 var isHovered by remember { mutableStateOf(false) }
                                 val backgroundColor by animateColorAsState(
-                                    if (isHovered) KitsuPrimary.copy(alpha = 0.2f) else Color(0xFF1A1A1A)
+                                    if (isHovered) KitsuPrimary.copy(alpha = 0.2f) else Color(0xFF1B1030)
                                 )
 
                                 OutlinedCard(

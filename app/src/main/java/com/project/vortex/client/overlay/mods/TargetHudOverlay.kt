@@ -204,7 +204,7 @@ class TargetHudOverlay : OverlayWindow() {
             Color.hsv((baseHue + 50f) % 360f, 0.75f, 1.0f, 0.9f) 
         }
         
-        val backgroundColor = Color(0xFF151515).copy(0.6f)
+        val backgroundColor = Color(0xFF150B24).copy(0.6f)
 
         
         Box(

@@ -97,7 +97,7 @@ class GraceMenuUi : OverlayWindow() {
 
                     val gradientBrush = remember {
                         Brush.linearGradient(
-                            colors = listOf(Color(0xFF6B48FF), Color(0xFF00DDEB)),
+                            colors = listOf(Color(0xFFB026FF), Color(0xFFE455FF)),
                             start = Offset.Zero,
                             end = Offset(100f, 100f)
                         )

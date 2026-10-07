@@ -149,7 +149,7 @@ class ClickGUI : OverlayWindow() {
                     painterResource(category.iconResId),
                     contentDescription = null,
                     modifier = Modifier.size(14.dp),
-                    tint = Color(0xFFD3D3D3)
+                    tint = Color(0xFFD9C2FF)
                 )
                 Text(
                     text = stringResource(category.labelResId),
@@ -157,7 +157,7 @@ class ClickGUI : OverlayWindow() {
                         fontSize = MaterialTheme.typography.titleSmall.fontSize * 0.9,
                         fontWeight = FontWeight.Bold
                     ),
-                    color = Color(0xFFD3D3D3)
+                    color = Color(0xFFD9C2FF)
                 )
             }
 
@@ -184,7 +184,7 @@ class ClickGUI : OverlayWindow() {
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color(0xFF101010).copy(0.8f))
+                        .background(Color(0xFF0A0611).copy(0.8f))
                         .padding(6.dp)
                 ) {
                     ModuleContentA(category)
