@@ -32,6 +32,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -169,11 +170,15 @@ class VersionCheckerActivity : ComponentActivity() {
                 ) {
                     val versionConfig by viewModel.versionConfig.collectAsState()
                     val configUnavailable by viewModel.configUnavailable.collectAsState()
-                    when {
-                        // Version API unreachable: start the app instead of blocking it
-                        configUnavailable -> startMainActivity()
 
-                        versionConfig == null -> {
+                    // Version API unreachable -> continue to the app instead of
+                    // blocking. Done in an effect so navigation happens exactly once.
+                    LaunchedEffect(configUnavailable) {
+                        if (configUnavailable) startMainActivity()
+                    }
+
+                    when {
+                        configUnavailable || versionConfig == null -> {
                             val kson = HashCat.getInstance()
                             val matchJson = kson.LintHashInit(this)
 
@@ -185,8 +190,15 @@ class VersionCheckerActivity : ComponentActivity() {
                             kson.LintHashInit(this)
 
                             val installedVersion = getInstalledMinecraftVersion()
-                            if (isCompatibleVersion(installedVersion, versionConfig!!)) {
-                                startMainActivity()
+                            val compatible = isCompatibleVersion(installedVersion, versionConfig!!)
+
+                            // Navigate exactly once instead of on every recomposition
+                            LaunchedEffect(compatible, installedVersion) {
+                                if (compatible) startMainActivity()
+                            }
+
+                            if (compatible) {
+                                LoadingConfigurationScreen()
                             } else {
                                 IncompatibleVersionScreen(
                                     installedVersion = installedVersion ?: "Unknown",
