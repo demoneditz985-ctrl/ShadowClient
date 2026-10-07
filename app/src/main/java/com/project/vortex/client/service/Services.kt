@@ -64,8 +64,10 @@ class Services : Service() {
         fun toggle(context: Context, captureModeModel: CaptureModeModel) {
             if (!isActive) {
                 // Ask for "All files access" here (user pressed start) instead of
-                // throwing the user into settings when the app launches.
-                if (!ensureStorageAccess(context)) return
+                // throwing the user into settings when the app launches. This must
+                // NOT block the capture: the relay and overlay only run once the
+                // service starts.
+                requestStorageAccessIfNeeded(context)
 
                 val intent = Intent(ACTION_CAPTURE_START)
                 intent.setPackage(context.packageName)
@@ -79,10 +81,10 @@ class Services : Service() {
             context.startForegroundService(intent)
         }
 
-        /** Returns false when the user still has to grant "All files access". */
-        private fun ensureStorageAccess(context: Context): Boolean {
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) return true
-            if (android.os.Environment.isExternalStorageManager()) return true
+        /** Prompts for "All files access" without blocking the capture from starting. */
+        private fun requestStorageAccessIfNeeded(context: Context) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) return
+            if (android.os.Environment.isExternalStorageManager()) return
 
             try {
                 val intent = Intent(android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
@@ -93,7 +95,7 @@ class Services : Service() {
                 context.startActivity(intent)
                 Toast.makeText(
                     context,
-                    "Allow \"All files access\" for Vortex Client, then press start again.",
+                    "Allow \"All files access\" (one time) for world saving and pack features.",
                     Toast.LENGTH_LONG
                 ).show()
             } catch (_: Exception) {
@@ -103,7 +105,6 @@ class Services : Service() {
                     Toast.LENGTH_LONG
                 ).show()
             }
-            return false
         }
 
         private fun on(context: Context, captureModeModel: CaptureModeModel) {
@@ -127,13 +128,11 @@ class Services : Service() {
 
 
 
-            val isPortrait = context.resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT
+            // The floating Vortex button is the entry point to the whole menu, so it
+            // is shown in portrait too (upstream hid it unless the device was rotated
+            // to landscape, which made the overlay look like it was not working).
             handler.post {
-                if (isPortrait) {
-                    OverlayManager.dismiss()
-                } else {
-                    OverlayManager.show(context)
-                }
+                OverlayManager.show(context)
             }
 
             thread = thread(name = "VortexRelayThread") {
@@ -268,13 +267,9 @@ class Services : Service() {
         super.onConfigurationChanged(newConfig)
         if (!isActive) return
 
-        val isPortrait = newConfig.orientation == Configuration.ORIENTATION_PORTRAIT
+        // Re-show on every rotation so the overlay is never lost.
         handler.post {
-            if (isPortrait) {
-                OverlayManager.dismiss()
-            } else {
-                OverlayManager.show(this)
-            }
+            OverlayManager.show(this)
         }
     }
 

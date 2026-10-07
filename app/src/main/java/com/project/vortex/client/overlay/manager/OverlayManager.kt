@@ -1,8 +1,14 @@
 package com.project.vortex.client.overlay.manager
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.PixelFormat
+import android.net.Uri
+import android.os.Handler
+import android.os.Looper
+import android.provider.Settings
 import android.util.Log
 import android.os.Build
 import android.view.View
@@ -39,21 +45,38 @@ object OverlayManager {
         private set
 
     init {
+        ensureWindows()
+    }
 
-
-        with(overlayWindows) {
-
-            if (!Services.RemisOnline) {
-                add(OverlayButton())
-                addAll(
-                    GameManager
-                        .elements
-                        .filter { it.isShortcutDisplayed }
-                        .map { it.overlayShortcutButton })
+    /**
+     * Keeps the window list in sync with the current mode. Upstream only built this
+     * list once in `init`, so a list captured before the game/modules were ready
+     * could end up without the floating button - the overlay then did nothing.
+     */
+    private fun ensureWindows() {
+        if (Services.RemisOnline) {
+            overlayWindows.removeAll { it is OverlayButton }
+            if (overlayWindows.none { it is DummyOverlay }) {
+                overlayWindows.add(DummyOverlay())
             }
-            else add(DummyOverlay())
+            return
         }
 
+        overlayWindows.removeAll { it is DummyOverlay }
+
+        if (overlayWindows.none { it is OverlayButton }) {
+            overlayWindows.add(0, OverlayButton())
+        }
+
+        GameManager
+            .elements
+            .filter { it.isShortcutDisplayed }
+            .map { it.overlayShortcutButton }
+            .forEach { shortcut ->
+                if (overlayWindows.none { it === shortcut }) {
+                    overlayWindows.add(shortcut)
+                }
+            }
     }
 
     fun showOverlayWindow(overlayWindow: OverlayWindow) {
@@ -77,11 +100,46 @@ object OverlayManager {
     fun show(context: Context) {
         currentContext = context
 
+        if (!canDrawOverlays(context)) {
+            requestOverlayPermission(context)
+            return
+        }
+
+        ensureWindows()
+
         overlayWindows.forEach {
             showOverlayWindow(context, it)
         }
 
         isShowing = true
+    }
+
+    private fun canDrawOverlays(context: Context): Boolean =
+        Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Settings.canDrawOverlays(context)
+
+    /**
+     * Instead of silently doing nothing when "Display over other apps" is missing,
+     * send the user to the exact settings page and say why.
+     */
+    private fun requestOverlayPermission(context: Context) {
+        Log.w("OverlayManager", "Overlay permission missing - asking the user")
+        try {
+            val intent = Intent(
+                Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                Uri.parse("package:${context.packageName}")
+            )
+            if (context !is Activity) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent)
+        } catch (t: Throwable) {
+            Log.e("OverlayManager", "Could not open overlay permission settings", t)
+        }
+        Toast.makeText(
+            context,
+            "Allow \"Display over other apps\" for Vortex Client so the menu can appear.",
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     fun dismiss() {
@@ -142,18 +200,41 @@ object OverlayManager {
             overlayWindow.firstRun = false
         }
 
-        try {
-            if (composeView.parent == null) {
-                windowManager.addView(composeView, layoutParams)
-            }
-        } catch (e: Exception) {
-            Log.e("OverlayManager", "Failed to add overlay window", e)
+        addViewWithRetry(windowManager, composeView, layoutParams, context)
+    }
 
-            if (e is WindowManager.BadTokenException) {
+    /**
+     * WindowManager can refuse the very first addView right after the permission is
+     * granted (common on MIUI/ColorOS), so the call is retried a couple of times
+     * instead of failing silently.
+     */
+    private fun addViewWithRetry(
+        windowManager: WindowManager,
+        composeView: View,
+        layoutParams: WindowManager.LayoutParams,
+        context: Context,
+        attempt: Int = 0
+    ) {
+        if (composeView.parent != null) return
+
+        try {
+            windowManager.addView(composeView, layoutParams)
+        } catch (e: Exception) {
+            Log.e("OverlayManager", "Failed to add overlay window (attempt $attempt)", e)
+
+            if (attempt < 2) {
+                Handler(Looper.getMainLooper()).postDelayed({
+                    addViewWithRetry(windowManager, composeView, layoutParams, context, attempt + 1)
+                }, 500L * (attempt + 1))
+            } else {
+                val reason = when {
+                    !canDrawOverlays(context) -> "\"Display over other apps\" permission is disabled"
+                    else -> e.message ?: e.javaClass.simpleName
+                }
                 Toast.makeText(
                     context,
-                    "Failed to add overlay window: ${e.message}",
-                    Toast.LENGTH_SHORT
+                    "Vortex overlay could not be shown: $reason",
+                    Toast.LENGTH_LONG
                 ).show()
             }
         }
