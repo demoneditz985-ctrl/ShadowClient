@@ -96,7 +96,7 @@ fun LandscapeLauncherContent() {
                             text = "PROJECT VORTEX",
                             fontSize = 28.sp,
                             fontWeight = FontWeight.Medium,
-                            color = Color.White,
+                            color = Color(0xFFB026FF),
                             textAlign = TextAlign.Center,
 
                             )
@@ -105,7 +105,7 @@ fun LandscapeLauncherContent() {
                             Text(
                                 text = "Select Mode",
                                 fontSize = 16.sp,
-                                color = Color.White.copy(alpha = 0.7f),
+                                color = Color(0xFFC77DFF).copy(alpha = 0.85f),
                                 textAlign = TextAlign.Center
                             )
                         }

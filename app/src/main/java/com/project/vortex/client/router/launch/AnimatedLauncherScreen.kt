@@ -130,7 +130,7 @@ fun AnimatedLauncherScreen() {
         }
         Text(
             text = "© Project Lumina 2026 · Vortex Client",
-            color = Color.White.copy(alpha = 0.5f),
+            color = Color(0xFFC9A8FF).copy(alpha = 0.6f),
             fontSize = 10.sp,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
