@@ -1,0 +1,109 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ "main", "arena/b8e60820-shadowclient" ]
+  workflow_dispatch:
+    inputs:
+      build_type:
+        description: "Gradle build task"
+        required: true
+        default: "assembleRelease"
+        type: choice
+        options:
+          - assembleRelease
+          - assembleDebug
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    name: Build Vortex Client APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install SDK / NDK / CMake packages
+        run: |
+          sdkmanager --install \
+            "platform-tools" \
+            "platforms;android-36" \
+            "build-tools;36.0.0" \
+            "ndk;27.0.12077973" \
+            "cmake;3.22.1" > /dev/null
+          sdkmanager --licenses > /dev/null || true
+          echo "ANDROID_HOME=$ANDROID_HOME"
+          echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/27.0.12077973" >> $GITHUB_ENV
+
+      - name: Generate Firebase stub config (repo ships none)
+        run: |
+          if [ ! -f app/google-services.json ]; then
+            APP_ID=$(grep -oP 'applicationId\s*=\s*"\K[^"]+' app/build.gradle.kts | head -1)
+            echo "Generating stub google-services.json for $APP_ID"
+            python3 - "$APP_ID" <<'PY'
+          import json, sys
+          app_id = sys.argv[1]
+          cfg = {
+            "project_info": {
+              "project_number": "000000000000",
+              "project_id": "vortex-client-stub",
+              "storage_bucket": "vortex-client-stub.appspot.com",
+            },
+            "client": [{
+              "client_info": {
+                "mobilesdk_app_id": "1:000000000000:android:0000000000000000000000",
+                "android_client_info": {"package_name": app_id},
+              },
+              "oauth_client": [],
+              "api_key": [{"current_key": "AIzaSyDUMMYDUMMYDUMMYDUMMYDUMMYDUMMY0"}],
+              "services": {"appinvite_service": {"other_platform_oauth_client": []}},
+            }],
+            "configuration_version": "1",
+          }
+          with open("app/google-services.json", "w") as fh:
+              json.dump(cfg, fh, indent=2)
+          PY
+          fi
+
+      - name: Gradle cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', 'gradle/libs.versions.toml', 'gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: gradle-${{ runner.os }}-
+
+      - name: Build release APK
+        run: ./gradlew :app:assembleRelease --no-daemon --stacktrace
+        continue-on-error: true
+
+      - name: Build debug APK (fallback)
+        run: ./gradlew :app:assembleDebug --no-daemon --stacktrace
+        continue-on-error: true
+
+      - name: Collect APKs
+        run: |
+          mkdir -p artifacts
+          find app/build/outputs/apk -name "*.apk" -exec cp {} artifacts/ \;
+          ls -la artifacts/
+
+      - name: Upload APKs
+        uses: actions/upload-artifact@v4
+        with:
+          name: vortex-client-apk
+          path: artifacts/*.apk
+          if-no-files-found: error
+          retention-days: 30
