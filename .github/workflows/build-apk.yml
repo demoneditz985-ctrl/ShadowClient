@@ -32,27 +32,31 @@ jobs:
           distribution: temurin
           java-version: "17"
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Install SDK / NDK / CMake packages
+      - name: Prepare Android SDK / NDK / CMake
         run: |
-          sdkmanager --install \
+          set -x
+          export ANDROID_HOME="${ANDROID_HOME:-/usr/local/lib/android/sdk}"
+          export ANDROID_SDK_ROOT="$ANDROID_HOME"
+          echo "ANDROID_HOME=$ANDROID_HOME" >> $GITHUB_ENV
+          echo "ANDROID_SDK_ROOT=$ANDROID_HOME" >> $GITHUB_ENV
+          ls -la "$ANDROID_HOME/cmdline-tools/latest/bin" || true
+          SDKMGR="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          yes | "$SDKMGR" --licenses > /dev/null 2>&1 || true
+          "$SDKMGR" --install \
             "platform-tools" \
             "platforms;android-36" \
             "build-tools;36.0.0" \
             "ndk;27.0.12077973" \
-            "cmake;3.22.1" > /dev/null
-          sdkmanager --licenses > /dev/null || true
-          echo "ANDROID_HOME=$ANDROID_HOME"
+            "cmake;3.22.1" 2>&1 | tail -20
           echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/27.0.12077973" >> $GITHUB_ENV
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
 
       - name: Generate Firebase stub config (repo ships none)
         run: |
           if [ ! -f app/google-services.json ]; then
             APP_ID=$(grep -oP 'applicationId\s*=\s*"\K[^"]+' app/build.gradle.kts | head -1)
             echo "Generating stub google-services.json for $APP_ID"
-            python3 - "$APP_ID" <<'PY'
+            python3 - "$APP_ID" > app/google-services.json <<'PY'
           import json, sys
           app_id = sys.argv[1]
           cfg = {
@@ -72,10 +76,10 @@ jobs:
             }],
             "configuration_version": "1",
           }
-          with open("app/google-services.json", "w") as fh:
-              json.dump(cfg, fh, indent=2)
+          print(json.dumps(cfg, indent=2))
           PY
           fi
+          cat app/google-services.json
 
       - name: Gradle cache
         uses: actions/cache@v4
@@ -86,24 +90,36 @@ jobs:
           key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*', 'gradle/libs.versions.toml', 'gradle/wrapper/gradle-wrapper.properties') }}
           restore-keys: gradle-${{ runner.os }}-
 
-      - name: Build release APK
-        run: ./gradlew :app:assembleRelease --no-daemon --stacktrace
-        continue-on-error: true
+      - name: Build
+        run: |
+          set -o pipefail
+          TASK="${{ github.event.inputs.build_type }}"
+          TASK="${TASK:-assembleRelease}"
+          ./gradlew :app:$TASK --no-daemon --stacktrace 2>&1 | tee gradle-build.log
+          echo "exit=${PIPESTATUS[0]}"
 
-      - name: Build debug APK (fallback)
-        run: ./gradlew :app:assembleDebug --no-daemon --stacktrace
-        continue-on-error: true
+      - name: Summarise failure log
+        if: failure()
+        run: |
+          {
+            echo "## Gradle build failed"
+            echo '```'
+            tail -n 200 gradle-build.log 2>/dev/null || echo "no log"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Collect APKs
         run: |
           mkdir -p artifacts
-          find app/build/outputs/apk -name "*.apk" -exec cp {} artifacts/ \;
-          ls -la artifacts/
+          find . -path ./artifacts -prune -o -name "*.apk" -print -exec cp {} artifacts/ \;
+          ls -la artifacts/ || true
+          cp gradle-build.log artifacts/ 2>/dev/null || true
 
-      - name: Upload APKs
+      - name: Upload APKs + build log
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: vortex-client-apk
-          path: artifacts/*.apk
-          if-no-files-found: error
+          name: vortex-client-build
+          path: artifacts/
+          if-no-files-found: warn
           retention-days: 30
