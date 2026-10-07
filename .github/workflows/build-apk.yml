@@ -123,3 +123,23 @@ jobs:
           path: artifacts/
           if-no-files-found: warn
           retention-days: 30
+
+      - name: Publish APK release
+        if: success() && hashFiles('artifacts/*.apk') != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION=$(grep -oP 'versionName\s*=\s*"\K[^"]+' app/build.gradle.kts | head -1)
+          VERSION="${VERSION:-4.1.8.2}"
+          TAG="vortex-v${VERSION}-build${{ github.run_number }}"
+          gh release create "$TAG" artifacts/*.apk \
+            --title "Vortex Client v${VERSION} (build ${{ github.run_number }})" \
+            --notes "Automated neon-purple Vortex Client build.
+
+          * Commit: \`${{ github.sha }}\`
+          * Branch: \`${{ github.ref_name }}\`
+          * Install on Android 9+ (Minecraft Bedrock 1.21.80+ recommended).
+
+          Rebranded fork of Lumina Client (Project Lumina, GPL-3.0-or-later)." \
+            --target "${{ github.sha }}" \
+            --latest
