@@ -63,6 +63,10 @@ class Services : Service() {
 
         fun toggle(context: Context, captureModeModel: CaptureModeModel) {
             if (!isActive) {
+                // Ask for "All files access" here (user pressed start) instead of
+                // throwing the user into settings when the app launches.
+                if (!ensureStorageAccess(context)) return
+
                 val intent = Intent(ACTION_CAPTURE_START)
                 intent.setPackage(context.packageName)
                 context.startForegroundService(intent)
@@ -73,6 +77,33 @@ class Services : Service() {
             val intent = Intent(ACTION_CAPTURE_STOP)
             intent.setPackage(context.packageName)
             context.startForegroundService(intent)
+        }
+
+        /** Returns false when the user still has to grant "All files access". */
+        private fun ensureStorageAccess(context: Context): Boolean {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.R) return true
+            if (android.os.Environment.isExternalStorageManager()) return true
+
+            try {
+                val intent = Intent(android.provider.Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
+                intent.data = android.net.Uri.fromParts("package", context.packageName, null)
+                if (context !is android.app.Activity) {
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                context.startActivity(intent)
+                Toast.makeText(
+                    context,
+                    "Allow \"All files access\" for Vortex Client, then press start again.",
+                    Toast.LENGTH_LONG
+                ).show()
+            } catch (_: Exception) {
+                Toast.makeText(
+                    context,
+                    "Grant file access in Settings > Apps > Vortex Client > Permissions.",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+            return false
         }
 
         private fun on(context: Context, captureModeModel: CaptureModeModel) {

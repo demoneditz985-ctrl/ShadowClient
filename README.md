@@ -14,6 +14,18 @@ overlays, minimap, notifications and every accent colour) has been repainted in
 > by Project Lumina (GPL-3.0-or-later). Upstream copyright notices are preserved — see
 > [COPYING.md](./COPYING.md) and [NOTICE](./NOTICE).
 
+### Launch behaviour in this build
+
+The upstream launch gates are removed, so the app simply opens:
+
+* no authentication / ad page is opened when you start the app (the previous
+  browser redirect and the automatic app close are gone),
+* no signature check that terminates the process on a self-built APK,
+* no remote "update" call that closed the app when its host was unreachable,
+* the version check no longer blocks the app when its API is offline,
+* "All files access" is requested only when you press start in the client, not
+  on every launch.
+
 ### Get the APK
 
 Builds are produced automatically by GitHub Actions:

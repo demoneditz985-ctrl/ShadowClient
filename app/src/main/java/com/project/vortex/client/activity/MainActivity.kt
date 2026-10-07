@@ -152,18 +152,10 @@ class MainActivity : ComponentActivity() {
         }
         
         
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            if (!Environment.isExternalStorageManager()) {
-                try {
-                    val intent = Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION)
-                    val uri = Uri.fromParts("package", packageName, null)
-                    intent.data = uri
-                    startActivity(intent)
-                } catch (e: Exception) {
-                    Log.e("MainActivity", "Failed to request MANAGE_EXTERNAL_STORAGE permission", e)
-                }
-            }
-        }
+        // "All files access" is no longer requested here: it used to open a system
+        // settings page the moment the app started. It is asked for when you press
+        // start in the client instead (see Services.ensureStorageAccess).
+
     }
 
     @OptIn(ExperimentalFoundationApi::class)
@@ -190,16 +182,11 @@ class MainActivity : ComponentActivity() {
         sessionManager.checkSession(this)
         InternalLoggerFactory.setDefaultFactory(JdkLoggerFactory.INSTANCE)
         Log.i("MainApplication", "Forced Netty to use JUL logger instead of Log4j2.")
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
-            val packageName = packageName
-            if (!powerManager.isIgnoringBatteryOptimizations(packageName)) {
-                val intent = Intent(Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS).apply {
-                    data = Uri.parse("package:$packageName")
-                }
-                startActivity(intent)
-            }
-        }
+        // Battery-optimisation prompt removed: it used to fire on every launch and
+        // throw the user straight into a system settings screen.
+        // If the capture service ever gets killed in the background, whitelist the
+        // app manually in Settings > Apps > Vortex Client > Battery > Unrestricted.
+
       
         enableEdgeToEdge()
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
